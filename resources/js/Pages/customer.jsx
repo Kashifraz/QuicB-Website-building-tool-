@@ -2,6 +2,7 @@ import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/inertia-react";
 import { usePage } from "@inertiajs/inertia-react";
+import DataTable from "@/Components/DataTable";
 
 export default function Dashboard(props) {
     const { flash } = usePage().props;
@@ -21,12 +22,7 @@ export default function Dashboard(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
-                            {flash.message && (
-                                <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-                                <span class="font-medium">Danger alert!</span> {flash.message}
-                              </div>
-                            )}
-                            You're logged in!
+                        <DataTable customers={props.customers} />
                         </div>
                     </div>
                 </div>

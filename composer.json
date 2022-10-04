@@ -8,9 +8,11 @@
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.3",
+        "laravel/cashier": "^14.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.7",
+        "stripe/stripe-php": "^9.6",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
