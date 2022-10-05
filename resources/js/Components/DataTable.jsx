@@ -1,17 +1,37 @@
 import React from "react";
+import { Inertia } from "@inertiajs/inertia";
+import { useForm } from "@inertiajs/inertia-react";
+import Pagination from "./Pagination";
 
-export default function Checkbox({ customers }) {
+export default function DataTable({ customers, IsSubscriber }) {
+    function destroy(e) {
+        if (confirm("Are you sure you want to delete this user?")) {
+            Inertia.delete(route("customers.destroy", e.currentTarget.id));
+        }
+    }
+
+    const { data, setData, post, processing, errors } = useForm({
+        search: '',
+      })
+
+
+    function search(e) {
+        e.preventDefault();
+        Inertia.get(route("customers.index", {search: data.search}));
+    }
     return (
-        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-            <div class="pb-4 bg-white dark:bg-gray-900">
-                <label for="table-search" class="sr-only">
+        <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+            
+            {!IsSubscriber &&
+            <form className="flex items-center" onSubmit={search}>
+                <label for="simple-search" className="sr-only">
                     Search
                 </label>
-                <div class="relative mt-1">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <div className="relative w-full">
+                    <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                         <svg
-                            class="w-5 h-5 text-gray-500 dark:text-gray-400"
                             aria-hidden="true"
+                            className="w-5 h-5 text-gray-500 dark:text-gray-400"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -25,66 +45,97 @@ export default function Checkbox({ customers }) {
                     </div>
                     <input
                         type="text"
-                        id="table-search"
-                        class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for items"
+                        onChange={e => setData('search', e.target.value)}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search"
+                        required=""
                     />
                 </div>
-            </div>
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <button
+                    type="submit"
+                    className="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                    <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        ></path>
+                    </svg>
+                    <span className="sr-only">Search</span>
+                </button>
+            </form>}
+
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
+                        <th scope="col" className="p-4">
+                            <div className="flex items-center">
                                 <input
                                     id="checkbox-all-search"
                                     type="checkbox"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                 />
                                 <label
-                                    for="checkbox-all-search"
-                                    class="sr-only"
+                                    htmlFor="checkbox-all-search"
+                                    className="sr-only"
                                 >
                                     checkbox
                                 </label>
                             </div>
                         </th>
-                        <th scope="col" class="py-3 px-6">
+                        <th scope="col" className="py-3 px-6">
                             Id
                         </th>
-                        <th scope="col" class="py-3 px-6">
+                        <th scope="col" className="py-3 px-6">
                             Name
                         </th>
-                        <th scope="col" class="py-3 px-6">
+                        <th scope="col" className="py-3 px-6">
                             Email
                         </th>
-                        <th scope="col" class="py-3 px-6">
-                            Subscription Status
-                        </th>
-                        <th scope="col" class="py-3 px-6">
-                            Subscription Plan
-                        </th>
-                        <th scope="col" class="py-3 px-6">
-                            Action
-                        </th>
+                        {IsSubscriber && (
+                            <>
+                                <th scope="col" className="py-3 px-6">
+                                    Subscription Status
+                                </th>
+                                <th scope="col" className="py-3 px-6">
+                                    Subscription Plan
+                                </th>
+                            </>
+                        )}
+
+                        {!IsSubscriber && (
+                            <>
+                                <th scope="col" className="py-3 px-6">
+                                    Action
+                                </th>
+                            </>
+                        )}
                     </tr>
                 </thead>
                 <tbody>
-                    {customers.map((customer) => (
+                    {customers.data.map((customer) => (
                         <tr
                             key={customer.id}
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
-                            <td class="p-4 w-4">
-                                <div class="flex items-center">
+                            <td className="p-4 w-4">
+                                <div className="flex items-center">
                                     <input
                                         id="checkbox-table-search-1"
                                         type="checkbox"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                     />
                                     <label
-                                        for="checkbox-table-search-1"
-                                        class="sr-only"
+                                        htmlFor="checkbox-table-search-1"
+                                        className="sr-only"
                                     >
                                         checkbox
                                     </label>
@@ -92,31 +143,45 @@ export default function Checkbox({ customers }) {
                             </td>
                             <th
                                 scope="row"
-                                class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
                                 {customer.id}
                             </th>
-                            <td class="py-4 px-6">{customer.name}</td>
-                            <td class="py-4 px-6">{customer.email}</td>
-                            <td class="py-4 px-6">
-                                <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
-                                    {customer.stripe_status}
-                                </span>
-                            </td>
-                            <td class="py-4 px-6">{customer.subscription_name}</td>
-                            <td class="py-4 px-6">
-                                <a
-                                    href="#"
-                                    class="font-medium text-red-600 dark:text-red-500 hover:underline"
-                                >
-                                    Delete
-                                </a>
-                                
-                            </td>
+                            <td className="py-4 px-6">{customer.name}</td>
+                            <td className="py-4 px-6">{customer.email}</td>
+
+                            {IsSubscriber && (
+                                <>
+                                    <td className="py-4 px-6">
+                                        <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                            {customer.stripe_status}
+                                        </span>
+                                    </td>
+                                    <td className="py-4 px-6">
+                                        {customer.subscription_name}
+                                    </td>
+                                </>
+                            )}
+                            {!IsSubscriber && (
+                                <>
+                                    <td className="py-4 px-6">
+                                        <button
+                                            onClick={destroy}
+                                            id={customer.id}
+                                            tabIndex="-1"
+                                            type="button"
+                                            className="mx-1 px-4 py-2 text-sm text-white bg-red-500 rounded"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </>
+                            )}
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <Pagination links={customers.links} id={customers.id} />
         </div>
     );
 }

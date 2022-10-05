@@ -14,76 +14,34 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $customer = User::where('is_admin', 'false')->get();
-        $customer = DB::table('users')
-            ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
-            ->select('users.*', 'subscriptions.stripe_status','subscriptions.name as subscription_name')
-            ->get();
+        $customer = User::when($request->search, function ($query, $search) {
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%")
+                ->paginate(5);
+        })->where('is_admin', 'false')->paginate(5);
+
         return Inertia::render('customer', [
             'customers' => $customer,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function BusinessReport()
     {
+        $customer = DB::table('users')
+            ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
+            ->select('users.*', 'subscriptions.stripe_status', 'subscriptions.name as subscription_name')
+            ->paginate(5);
+        return Inertia::render('BusinessReport', [
+            'customers' => $customer,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function destroy($id)
     {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $customer)
-    {
-        $customer->delete();
+        User::find($id)->delete();
+        return redirect()->route('customers.index');
     }
 }

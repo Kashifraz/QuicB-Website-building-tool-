@@ -29,23 +29,24 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified','notadmin'])->name('dashboard');
+})->middleware(['auth', 'verified', 'notadmin'])->name('dashboard');
 
-Route::get('/admin/customers',[CustomerController::class,'index'])->name('customers');
-Route::resource('/admin/customers', CustomerController::class)
-    ->only(['index', 'destroy'])
-    ->middleware(['auth', 'verified']);
 //admin routes
-Route::get('/admin/login',[AdminController::class,'showLogin'])->name('admin.login')->middleware('guest');
-Route::post('/admin/authenticate',[AdminController::class,'authenticate'])->name('admin.authenticate');
-Route::get('/admin/dashboard',[AdminController::class,'Dashboard'])->name('admin.dashboard')
-->middleware(['auth', 'admin']);
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('/admin/customers', CustomerController::class)
+        ->only(['index', 'destroy']);
+    Route::get('/admin/businessreport', [CustomerController::class, 'BusinessReport'])->name('customers.businessreport');
+    Route::get('/admin/login', [AdminController::class, 'showLogin'])->name('admin.login')->middleware('guest');
+    Route::post('/admin/authenticate', [AdminController::class, 'authenticate'])->name('admin.authenticate');
+    Route::get('/admin/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
+});
+
 
 //Plan and subscription routes
-Route::middleware(['auth','subscriber'])->group(function () {
+Route::middleware(['auth', 'subscriber'])->group(function () {
     Route::get('plans', [PlanController::class, 'index'])->name('plans');
     Route::get('plans/{plan}', [PlanController::class, 'show'])->name("plans.show");
     Route::post('subscription', [PlanController::class, 'subscription'])->name("subscription.create");
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
