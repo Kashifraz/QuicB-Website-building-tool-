@@ -30,6 +30,12 @@ export default function Authenticated({ auth, header, children }) {
                                 <NavLink href={route('customers.businessreport')} active={route().current('customers.businessreport')}>
                                     Business Report
                                 </NavLink>
+                                <NavLink href={route('expense.index')} active={route().current('expense.index')}>
+                                    Expenses
+                                </NavLink>
+                                <NavLink href={route('admin.register')} active={route().current('admin.register')}>
+                                   Register Admin
+                                </NavLink>
                             </div>
                         </div>
 
@@ -105,6 +111,12 @@ export default function Authenticated({ auth, header, children }) {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('customers.businessreport')} active={route().current('customers.businessreport')}>
                            Business Report
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('expense.index')} active={route().current('expense.index')}>
+                           Expense
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('admin.register')} active={route().current('admin.register')}>
+                           Register Admin
                         </ResponsiveNavLink>
                     </div>
 

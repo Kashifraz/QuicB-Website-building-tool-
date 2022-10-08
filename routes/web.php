@@ -6,17 +6,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ExpenseController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -35,10 +26,20 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/customers', CustomerController::class)
         ->only(['index', 'destroy']);
-    Route::get('/admin/businessreport', [CustomerController::class, 'BusinessReport'])->name('customers.businessreport');
-    Route::get('/admin/login', [AdminController::class, 'showLogin'])->name('admin.login')->middleware('guest');
-    Route::post('/admin/authenticate', [AdminController::class, 'authenticate'])->name('admin.authenticate');
-    Route::get('/admin/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
+    Route::get('/admin/businessreport', [CustomerController::class, 'BusinessReport'])
+        ->name('customers.businessreport');
+    Route::resource('/admin/expense', ExpenseController::class)
+        ->only(['index', 'store', 'destroy']);
+    Route::get('/admin/login', [AdminController::class, 'showLogin'])
+        ->name('admin.login')->middleware('guest');
+    Route::get('/admin/register', [AdminController::class, 'RegisterForm'])
+        ->name('admin.register');
+    Route::post('/admin/register', [AdminController::class, 'RegisterNewAdmin'])
+        ->name('admin.register');
+    Route::post('/admin/authenticate', [AdminController::class, 'authenticate'])
+        ->name('admin.authenticate');
+    Route::get('/admin/dashboard', [AdminController::class, 'Dashboard'])
+        ->name('admin.dashboard');
 });
 
 

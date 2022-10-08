@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ExpenseController;
+
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $customer = User::when($request->search, function ($query, $search) {
@@ -27,14 +26,27 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function CalculateRevenue()
+    {
+        $revenueBasic = DB::table('subscriptions')->where('name', 'basic')
+            ->count();
+        $revenuePremium = DB::table('subscriptions')->where('name', 'premium')
+            ->count();
+            $revenue = ($revenueBasic * 10)+($revenuePremium *100);
+        return $revenue;
+    }
+
+
     public function BusinessReport()
     {
         $customer = DB::table('users')
             ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
             ->select('users.*', 'subscriptions.stripe_status', 'subscriptions.name as subscription_name')
             ->paginate(5);
+        $totalRevenue = $this->CalculateRevenue();
         return Inertia::render('BusinessReport', [
             'customers' => $customer,
+            'totalRevenue' => $totalRevenue,
         ]);
     }
 
