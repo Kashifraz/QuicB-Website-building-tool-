@@ -4,7 +4,7 @@ import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
 import ExpenseModal from "@/Components/ExpenseModal";
 import ExpenseTable from "@/Components/ExpenseTable";
 
-export default function Dashboard(props) {
+export default function expense(props) {
     const { flash } = usePage().props;
     // const { data, setData, post, processing, errors, reset } = useForm({
     //     title: "",
