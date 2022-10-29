@@ -21,9 +21,11 @@ class ExpenseController extends Controller
         ]);
     }
 
-    function SumExpenses()
+    function SumExpenses($filter = null)
     {
-        $ExpenseSum = Expense::all()->sum('amount');
+        if ($filter == null) {
+            $ExpenseSum = Expense::all()->sum('amount');
+        }
         return $ExpenseSum;
     }
 
@@ -42,7 +44,7 @@ class ExpenseController extends Controller
             ->with('message', "expense added successfully");
     }
 
-    
+
     public function destroy(Expense $expense)
     {
         $expense->delete();

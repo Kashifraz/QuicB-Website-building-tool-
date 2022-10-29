@@ -10,7 +10,7 @@ export default function ExpenseTable({ expenses, expensesum }) {
     }
 
     return (
-        <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <div className="overflow-x-auto relative ">
             <div className="grid grid-cols-2 gap-4 mt-5 mb-5 text-center">
                 <div>
                     <b>
@@ -21,7 +21,7 @@ export default function ExpenseTable({ expenses, expensesum }) {
                     <h4>$ {expensesum}/-</h4>
                 </div>
             </div>
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="py-3 px-6">
@@ -79,8 +79,10 @@ export default function ExpenseTable({ expenses, expensesum }) {
                     ))}
                 </tbody>
             </table>
-
-            <Pagination links={expenses.links} id={expenses.id} />
+            <div className="ml-9">
+                <Pagination links={expenses.links} id={expenses.id} />
+            </div>
+            
             
         </div>
     );

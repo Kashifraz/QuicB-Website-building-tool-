@@ -19,8 +19,8 @@ export default function Dashboard(props) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 bg-white border-b border-gray-200">
+                    <div className="overflow-hidden sm:rounded-lg">
+                        <div className="p-6 ">
                             {flash.message && (
                                 <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
                                 <span class="font-medium">Danger alert!</span> {flash.message}

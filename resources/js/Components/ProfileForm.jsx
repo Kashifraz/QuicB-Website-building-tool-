@@ -47,7 +47,7 @@ export default function ProfileForm(props) {
                 <div className="col-span-2">
                     <p className="mt-9">Update your name and email here</p>
                 </div>
-                <div className="col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg p-5 ">
+                <div className="col-span-2 bg-white overflow-hidden  sm:rounded-lg p-5 ">
                     <form onSubmit={submit}>
                         <div>
                             <InputLabel forInput="name" value="Name" />

@@ -7,8 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>{{$name}}</h1>
-    <p>{{$date}}</p>
-    <p>{{$text}}</p>
+    <small>Report Issued at: {{$date}} </small>
+    <hr>
+    <h1>QuicB Business analysis report</h1>
+    <p>Total accumalated revenue: {{$totalRevenue}}</p>
+    <p>Total recorded expenses: {{$totalExpenses}}</p>
+    <p>Total registered users: {{$totalUsers}}</p>
+    <p>Total subscribed users: {{$totalSubscribers}}</p>
+    <hr>
+    <p><b>Profit earned: {{$totalRevenue - $totalExpenses }}</b></p>
+    <p><b>Ratio of Subscribers to Customers: 1 to {{ $totalUsers/$totalSubscribers}} times</b></p>
+    
 </body>
 </html>

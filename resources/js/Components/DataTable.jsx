@@ -2,8 +2,9 @@ import React from "react";
 import { Inertia } from "@inertiajs/inertia";
 import { useForm } from "@inertiajs/inertia-react";
 import Pagination from "./Pagination";
+import { isEmpty } from "lodash";
 
-export default function DataTable({ customers, IsSubscriber }) {
+export default function DataTable({ customers, IsSubscriber, Search, Filter }) {
     function destroy(e) {
         if (confirm("Are you sure you want to delete this user?")) {
             Inertia.delete(route("customers.destroy", e.currentTarget.id));
@@ -11,23 +12,40 @@ export default function DataTable({ customers, IsSubscriber }) {
     }
 
     const { data, setData, post, processing, errors } = useForm({
-        search: "",
+        search: Search,
+        filter: Filter,
     });
 
     function search(e) {
         e.preventDefault();
-        Inertia.get(route("customers.index", { search: data.search }));
+        Inertia.get(
+            route("customers.index", {
+                search: data.search,
+                filter: data.filter,
+            })
+        );
     }
+
     return (
-        <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <div className="overflow-x-auto relative  sm:rounded-lg">
             {!IsSubscriber && (
-                <div class="grid grid-cols-3 gap-4">
-                    <div></div>
-                    <div>
-                        <form
-                            className="flex items-center mb-5"
-                            onSubmit={search}
+                <div class="grid grid-cols-5 gap-4">
+                    <div className="col-span-1"></div>
+                    <div className="col-span-1">
+                        <select
+                            value={data.filter}
+                            onChange={(e) => setData("filter", e.target.value)}
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
+                            <option value="0">All Time</option>
+                            <option value="1">yesterday</option>
+                            <option value="7">Last 7 days</option>
+                            <option value="30">last 30 days</option>
+                        </select>
+                    </div>
+
+                    <div className="col-span-2">
+                        <form className="flex items-center mb-5">
                             <label for="simple-search" className="sr-only">
                                 Search
                             </label>
@@ -49,16 +67,16 @@ export default function DataTable({ customers, IsSubscriber }) {
                                 </div>
                                 <input
                                     type="text"
+                                    value={data.search}
                                     onChange={(e) =>
                                         setData("search", e.target.value)
                                     }
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Search"
-                                    required=""
                                 />
                             </div>
                             <button
                                 type="submit"
+                                onClick={search}
                                 className="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             >
                                 <svg
@@ -80,7 +98,7 @@ export default function DataTable({ customers, IsSubscriber }) {
                         </form>
                     </div>
 
-                    <div></div>
+                    <div className="col-span-1"></div>
                 </div>
             )}
 
@@ -192,7 +210,9 @@ export default function DataTable({ customers, IsSubscriber }) {
                     ))}
                 </tbody>
             </table>
-            <Pagination links={customers.links} id={customers.id} />
+            <div className="ml-9">
+                <Pagination links={customers.links} id={customers.id} />
+            </div>
         </div>
     );
 }
