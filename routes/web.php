@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\PlanController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -54,6 +55,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('admin.profile');
     Route::get('/admin/report',[CustomerController::class,'generatePDF'])
     ->name('report.pdf');
+    //Admin add component routes
+    Route::get('/admin/addcomponent', [ComponentController::class,'index'])->name('admin.addcomponent');
 });
 
 //profile Route

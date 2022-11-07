@@ -54,6 +54,12 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     Register Admin
                                 </NavLink>
+                                <NavLink
+                                    href={route("admin.addcomponent")}
+                                    active={route().current("admin.addcomponent")}
+                                >
+                                    Add Component
+                                </NavLink>
                             </div>
                         </div>
 
@@ -184,6 +190,12 @@ export default function Authenticated({ auth, header, children }) {
                             active={route().current("admin.register")}
                         >
                             Register Admin
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("admin.addcomponent")}
+                            active={route().current("admin.addcomponent")}
+                        >
+                           Add Component
                         </ResponsiveNavLink>
                     </div>
 
