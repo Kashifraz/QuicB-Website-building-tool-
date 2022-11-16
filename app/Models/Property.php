@@ -10,7 +10,7 @@ class Property extends Model
     use HasFactory;
 
     protected $fillable = [
-        'property','value'
+        'property','value','element_id'
     ];
 
     public function element(){

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\PlanController;
 use Illuminate\Foundation\Application;
@@ -9,6 +10,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ElementController;
+use App\Http\Controllers\PropertyController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -57,6 +60,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
     ->name('report.pdf');
     //Admin add component routes
     Route::get('/admin/addcomponent', [ComponentController::class,'index'])->name('admin.addcomponent');
+    Route::post('/admin/addcomponent', [ComponentController::class,'createComponent'])->name('admin.addcomponent');
+   
+   //admin add Element routes
+    Route::post('/admin/addelement', [ElementController::class, 'store'])->name('admin.addelement');
+    Route::get('/admin/showelement/{element}', [ElementController::class, 'show'])->name('element.show');
+
+   //admin Attribute Routes
+    Route::post('/admin/addattribute', [AttributeController::class,"store"])->name('admin.addattribute');
+    Route::delete('/admin/destroyattribute/{attribute}', [AttributeController::class,"destroy"])->name('attribute.destroy');
+
+   //admin Properties Routes 
+    Route::post('/admin/addproperty', [PropertyController::class, "store"])->name('admin.addproperty');
+    Route::delete('/admin/destroyproperty/{property}', [PropertyController::class,"destroy"])->name('property.destroy');
+
 });
 
 //profile Route

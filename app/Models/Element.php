@@ -11,7 +11,10 @@ class Element extends Model
     
     protected $fillable = [
         'tag',
-        'content'
+        'content',
+        'type',
+        'parent_id',
+        'component_id',
     ];
 
     public function component(){

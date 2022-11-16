@@ -17,8 +17,9 @@ return new class extends Migration
         Schema::create('elements', function (Blueprint $table) {
             $table->id();
             $table->string('tag');
-            $table->string('content');
-            $table->integer('parent_id');
+            $table->string('content')->nullable();
+            $table->integer('parent_id')->nullable();
+            $table->integer('type');
             $table->foreignIdFor(Component::class);
             $table->timestamps();
         });

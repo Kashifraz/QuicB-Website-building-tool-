@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        "baseUrl": "http://127.0.0.1:8000/",
         "paths": {
-            "@/*": ["resources/js/*"]
+            "@/*": ["resources/js/*"],
+            "#":["http://127.0.0.1:8000/"]
         }
     },
     "exclude": ["node_modules", "public"]
