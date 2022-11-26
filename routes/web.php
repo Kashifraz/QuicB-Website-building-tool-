@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ElementController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PropertyController;
 
 Route::get('/', function () {
@@ -23,7 +24,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $user_id = Auth()->user()->id;
+   
+    return Inertia::render('Dashboard',[
+        "user_id" => $user_id
+    ]);
 })->middleware(['auth', 'verified', 'notadmin'])->name('dashboard');
 
 //Plan and subscription routes
@@ -61,10 +66,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     //Admin add component routes
     Route::get('/admin/addcomponent', [ComponentController::class,'index'])->name('admin.addcomponent');
     Route::post('/admin/addcomponent', [ComponentController::class,'createComponent'])->name('admin.addcomponent');
-   
+    Route::delete('/admin/destroycompoent/{component}', [ComponentController::class,"destroy"])->name('component.destroy');
+
    //admin add Element routes
     Route::post('/admin/addelement', [ElementController::class, 'store'])->name('admin.addelement');
     Route::get('/admin/showelement/{element}', [ElementController::class, 'show'])->name('element.show');
+    Route::delete('/admin/destroyelement/{element}', [ElementController::class,"destroy"])->name('element.destroy');
 
    //admin Attribute Routes
     Route::post('/admin/addattribute', [AttributeController::class,"store"])->name('admin.addattribute');
@@ -83,5 +90,13 @@ Route::post('/updateprofile', [ProfileController::class, 'updateProfileInfo'])
     ->middleware('auth')->name('profile.info');
 Route::post('/updatepass', [ProfileController::class, 'ChangePassword'])
     ->middleware('auth')->name('profile.pass');
+
+//project Routes
+Route::middleware(['auth', 'notadmin'])->group(function () {
+    Route::get('/showhtml', [ProjectController::class, "generateHtml"]);
+    Route::get('/showcss', [ProjectController::class, "generateCSS"]);
+    Route::post('/createproject',[ProjectController::class, "createProject"])->name('project.create');
+    Route::get('/canvas/{project}', [ProjectController::class, "getCanvas"])->name('project.canvas');
+});
 
 require __DIR__ . '/auth.php';

@@ -27,7 +27,8 @@ export default function Dashboard(props) {
                                 <span class="font-medium">Danger alert!</span> {flash.message}
                               </div>
                             )}
-                            <ProjectModel user_id ={props.user_id} />
+                            Welcome to canvas!
+                            {props.project.title}
                         </div>
                     </div>
                 </div>
