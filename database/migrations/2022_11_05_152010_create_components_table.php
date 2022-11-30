@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('components', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('component_tag');
             $table->text('description');
             $table->timestamps();
         });

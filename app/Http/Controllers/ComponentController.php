@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Attribute;
 use App\Models\Component;
+use App\Models\Element;
+use App\Models\Elementgroup;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,7 +13,7 @@ use Inertia\Inertia;
 class ComponentController extends Controller
 {
     public function index(){
-        $Components = Component::with('elements')->get();
+        $Components = Component::with('elementgroups')->get();
    
         return Inertia::render('Admin/addComponent',[
             'components'=>$Components,
@@ -22,6 +24,7 @@ class ComponentController extends Controller
 
         $request->validate([
             'name' => ['required'],
+            'component_tag' => ['required'],
             'description' => ['required'],
         ]);
         
@@ -31,14 +34,28 @@ class ComponentController extends Controller
             ->with('message', "component added Successfully");
     }
 
+    public function show(Component $component){
+
+        $Elementgroups = Elementgroup::with('elements')->get();
+        return Inertia::render('Admin/AddElementgroup',[
+            "component" => $component,
+            "Elementgroups" => $Elementgroups,
+        ]);
+    }
+
 
     public function destroy(Component $component){
 
-        $elements = $component->elements;
-        foreach ($elements as $element) {
-            Attribute::where("element_id","=", $element->id)->delete();
-            Property::where("element_id","=", $element->id)->delete();
-            $element->delete();
+        $elementgroups = $component->elementgroups;
+        foreach ($elementgroups as $elementgroup) {
+            $elements = $elementgroup->elements;
+            foreach ($elements as $element) {
+                Attribute::where("element_id","=", $element->id)->delete();
+                Property::where("element_id","=", $element->id)->delete();
+                $element->delete();
+            }
+    
+            $elementgroup->delete();
         }
 
         $component->delete();

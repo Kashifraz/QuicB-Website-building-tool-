@@ -11,8 +11,10 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ElementController;
+use App\Http\Controllers\ElementgroupController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PropertyController;
+use App\Models\Elementgroup;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -67,8 +69,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/addcomponent', [ComponentController::class,'index'])->name('admin.addcomponent');
     Route::post('/admin/addcomponent', [ComponentController::class,'createComponent'])->name('admin.addcomponent');
     Route::delete('/admin/destroycompoent/{component}', [ComponentController::class,"destroy"])->name('component.destroy');
-
-   //admin add Element routes
+    
+    //Admin add Element Group routes
+    Route::get('/admin/showcomponent/{component}', [ComponentController::class, 'show'])->name('component.show');
+    Route::post('/admin/addelementgroup', [ElementgroupController::class, 'store'])->name('admin.addelementgroup');
+    Route::delete('/admin/destroyelementgroup/{elementgroup}', [ElementgroupController::class,"destroy"])->name('elementgroup.destroy');
+    
+    //admin add Element routes
     Route::post('/admin/addelement', [ElementController::class, 'store'])->name('admin.addelement');
     Route::get('/admin/showelement/{element}', [ElementController::class, 'show'])->name('element.show');
     Route::delete('/admin/destroyelement/{element}', [ElementController::class,"destroy"])->name('element.destroy');

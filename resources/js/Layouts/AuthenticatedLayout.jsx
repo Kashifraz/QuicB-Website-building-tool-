@@ -25,7 +25,7 @@ export default function Authenticated({ auth, header, children }) {
                                     Dashboard
                                 </NavLink>
                                 <NavLink href={route('plans')} active={route().current('plans')}>
-                                    Subscribe
+                                    Subscription
                                 </NavLink>
                             </div>
                         </div>
@@ -101,7 +101,7 @@ export default function Authenticated({ auth, header, children }) {
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('plans')} active={route().current('plans')}>
-                            Subscribe
+                            Subscription
                         </ResponsiveNavLink>
                     </div>
 

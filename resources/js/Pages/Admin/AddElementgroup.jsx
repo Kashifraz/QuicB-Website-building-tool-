@@ -3,10 +3,9 @@ import AdminAuthenticatedLayout from "@/Layouts/AdminAuthenticatedLayout";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
 import ElementModal from "@/Components/ElementModal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash, faSquareUpRight} from "@fortawesome/free-solid-svg-icons"; 
+import {faTrash, faEye } from "@fortawesome/free-solid-svg-icons"; 
 import { Inertia } from "@inertiajs/inertia";
 import InputError from "@/Components/InputError";
-import route from "../../../../vendor/tightenco/ziggy/src/js";
 
 
 
@@ -14,8 +13,8 @@ export default function expense(props) {
     const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         name: " ",
-        component_tag: " ",
-        description: " ",
+        tag: " ",
+        component_id:props.component.id,
     });
 
     const onHandleChange = (event) => {
@@ -27,9 +26,11 @@ export default function expense(props) {
         );
     };
 
+
+
     const submit = (e) => {
         e.preventDefault();
-        post(route("admin.addcomponent"),{
+        post(route("admin.addelementgroup"),{
             preserveScroll: true,
             onSuccess: () => reset(),
           }  );
@@ -42,9 +43,9 @@ export default function expense(props) {
         }
     }
 
-    function destroyComponent(e) {
+    function destroyElementGroup(e) {
         if (confirm("Are you sure you want to delete?")) {
-            Inertia.delete(route("component.destroy", e.currentTarget.id));
+            Inertia.delete(route("elementgroup.destroy", e.currentTarget.id));
         }
     }
 
@@ -54,11 +55,13 @@ export default function expense(props) {
             errors={props.errors}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Add Component
+                   Showing Component {props.component.name}
                 </h2>
             }
         >
-            <Head title="Add Component" />
+            <Head title="show Component" />
+
+            <h1></h1>
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -74,27 +77,23 @@ export default function expense(props) {
                             <div class="grid grid-cols-2 gap-4 px-6">
 
                                 <div className="">
+
+                                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white mb-6">Enter Element Group Info</h5>
                                     <form onSubmit={submit}>
-                                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white mb-6">Enter Component Info</h5>
                                     <div class="mb-6 ">
-                                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Component Name</label>
-                                        <input type="text" id="name" name="name" onChange={onHandleChange} value={data.name} 
+                                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Element Group Name</label>
+                                        <input type="text" id="name" name="name" onChange={onHandleChange} value={data.name}
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
                                         <InputError message={errors.name} className="mt-2" />
                                     </div>
                                     <div class="mb-6 ">
-                                        <label for="component_tag" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Component Tag</label>
-                                        <input type="text" id="component_tag" name="component_tag" onChange={onHandleChange} value={data.component_tag}
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Component Tag" required />
-                                        <InputError message={errors.component_tag} className="mt-2" />
+                                        <label for="tag" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Element Group tag</label>
+                                        <input type="text" id="tag" name="tag" onChange={onHandleChange} value={data.tag}
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
+                                        <InputError message={errors.tag} className="mt-2" />
                                     </div>
-                                    <div className="mb-6 ">
-                                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Component Description</label>
-                                        <textarea id="description" name="description" onChange={onHandleChange} value={data.description}
-                                        rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Component Description"></textarea>
-                                        <InputError message={errors.description} className="mt-2" />
-                                    </div>
-                                    <button type="submit"  class="mb-6 ml-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 float-right">Submit</button>
+                                  
+                                    <button type="submit"  class="mb-6  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 float-left">Submit</button>
                                     </form>
                                 </div>
 
@@ -105,13 +104,13 @@ export default function expense(props) {
 
                                 <div class=" w-full sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                                     <div class="flex justify-between items-center mb-4">
-                                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Added Components</h5>
+                                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Added Element Groups</h5>
                                     </div>
                                     <div class="flow-root">
                                         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                           {props.components.length == 0 ? (<> <div>No components added yet</div> </>):(
+                                           {props.Elementgroups.length == 0 ? (<> <div>No Element Groups added yet</div> </>):(
                                            <>
-                                           {props.components.map((component) => (
+                                           {props.Elementgroups.map((Elementgroup) => (
                                                 <>
                                                     <li class="py-3 sm:py-4">
                                                         <div class="flex items-center space-x-4">
@@ -120,30 +119,55 @@ export default function expense(props) {
                                                             </div>
                                                             <div class="flex-1 min-w-0">
                                                                 <p class="text-lg font-bold text-gray-900 truncate dark:text-white">
-                                                                    {component.name}                                                        </p>
+                                                                    {Elementgroup.name}                                                        </p>
                                                                 <p class="text-lg text-gray-500  dark:text-gray-400">
-                                                                    {component.description}
+                                                                    {Elementgroup.tag}
                                                                 </p>
                                                             </div>
                                                             <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                                                                 <div class="inline-flex " >
                                                                     <button
-                                                                        onClick={destroyComponent}
-                                                                        id={component.id}
+                                                                        onClick={destroyElementGroup}
+                                                                        id={Elementgroup.id}
                                                                         tabIndex="-1"
                                                                         type="button" class="bg-red-700 text-white active:bg-red-800 font-bold text px-3  rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2">
                                                                         <FontAwesomeIcon icon={faTrash} /> Delete
                                                                     </button>
-                                                                    
-                                                                    <Link
-                                                                        href={route("component.show", component.id)}
-                                                                        class="bg-blue-700 text-white active:bg-blue-800 font-bold text px-3  rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2">
-                                                                        <FontAwesomeIcon icon={faSquareUpRight} /> Populate
-                                                                    </Link>
-                                                                    {/* <ElementModal component={component} elements={component.elements} /> */}
+
+                                                                    <ElementModal elementgroup={Elementgroup} elements={Elementgroup.elements} />
                                                                 </div>
                                                             </div>
-                                                        </div>   
+                                                        </div>
+                                                        {Elementgroup.elements.length == 0 ? (<> <div className="mt-6 ml-16">No elements added yet</div> </>): (
+                                                            <>
+                                                            {Elementgroup.elements.map((element) => (
+                                                            <>
+                                                                <div className="mt-6 ml-12 border-l-4 pl-6 border-indigo-500 bg-light-100 p-3 shadow-lg">
+                                                                    <h2> <b className="text-lg">element = {element.tag} </b>  </h2>
+                                                                    <span> {element.type == 0 ? (<> Block </>) : (<> inline </>)} element</span>
+                                                                    <p>
+                                                                        <b>content</b> = {element.content == null ? (<> No Content</>) : (<>{element.content}</>)}
+                                                                    </p>
+
+                                                                    <button
+                                                                        onClick={destroyElement}
+                                                                        id={element.id}
+                                                                        tabIndex="-1"
+                                                                        type="button" class="mt-3  bg-red-700 text-white active:bg-red-800   px-3 py-1 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none  mb-1 ease-linear transition-all duration-150">
+                                                                        <FontAwesomeIcon icon={faTrash} /> Delete
+                                                                    </button>
+
+                                                                    <Link
+                                                                        class="mt-3 ml-3 bg-green-700 text-white active:bg-green-800   px-3 py-1 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none  mb-1 ease-linear transition-all duration-150"
+                                                                        href={route("element.show", element.id)}>
+                                                                        <FontAwesomeIcon icon={faEye} /> Show
+                                                                    </Link>
+                                                                </div>
+                                                            </>
+                                                        ))}
+                                                            </>
+                                                        )}
+                                                        
                                                     </li>
                                                 </>
                                             ))}

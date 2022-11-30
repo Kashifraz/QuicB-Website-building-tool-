@@ -13,13 +13,13 @@ class Element extends Model
         'tag',
         'content',
         'type',
-        'parent_id',
-        'component_id',
+        'is_parent',
+        'elementgroup_id',
     ];
 
-    public function component(){
+    public function elementgroup(){
 
-        return $this->belongsTo(Component::class);
+        return $this->belongsTo(Elementgroup::class);
     }
 
     public function attributes(){

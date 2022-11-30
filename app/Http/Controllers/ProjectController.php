@@ -40,32 +40,38 @@ class ProjectController extends Controller
 
     public function generateHtml()
     {
-        $tagOpen = null;
-        $tagClosed = null;
-        $tag = " ";
-        $content = null;
-
-        $elements = Element::where('component_id', '=', 7)->get();
-        foreach ($elements as $element) {
-            $tag = $element->tag;
-            $attributes = null;
-            foreach ($element->attributes as $attribute) {
-                $attributes =  $attributes.$attribute->name." = "." '".$attribute->value."' ";
+        $componentOpen = null;
+        $componentClose = null;
+        $component = Component::find(23);
+        $componentOpen = " <".$component->component_tag."".">";
+        Storage::append('project/Project_28_9/index.html', $componentOpen);
+        $elementgroupOpen = null;
+        foreach ($component->elementgroups as $elementgroup) {
+            $elementOpen = null;
+            $elementClose = null;
+            $content = null;
+            $elementgroupOpen = "<".$elementgroup->tag."".">";
+            Storage::append('project/Project_28_9/index.html', $elementgroupOpen);
+            foreach ($elementgroup->elements as $element) {
+                if(!$element->is_parent){
+                    $elementOpen = $elementOpen. " <".$element->tag."".">";
+                    Storage::append('project/Project_28_9/index.html', $elementOpen);
+                    $content = $content.$element->content."";
+                    Storage::append('project/Project_28_9/index.html', $content);
+                    $elementClose = $elementClose. "</".$element->tag."".">";
+                    Storage::append('project/Project_28_9/index.html', $elementClose);
+                }
+                
             }
-    
-            $tagOpen = $tagOpen. " < ".$tag." ".$attributes." >\n";
-            $content = $content.$element->content."\n";
+          $elementgroup = " </".$elementgroup->tag."".">";
+          Storage::append('project/Project_28_9/index.html', $elementgroup);
         }
+        $componentClose = " </".$component->component_tag."".">";
+        Storage::append('project/Project_28_9/index.html', $componentClose);
+        Storage::append('project/Project_28_9/index.html', "</body>");
+        Storage::append('project/Project_28_9/index.html', "</html>");
 
-        $elements = Element::where('component_id', '=', 7)->get()->sortDesc();
-         foreach ($elements as $element) {
-            $tag = $element->tag;
-            $tagClosed = $tagClosed. " < / ".$tag." >\n";
-        }
-        
-        echo nl2br($tagOpen);
-        echo nl2br($content);
-        echo nl2br($tagClosed);
+        return Storage::download('project/Project_28_9/index.html');
 
     }
 

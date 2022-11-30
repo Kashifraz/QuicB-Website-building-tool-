@@ -7,7 +7,7 @@ use App\Models\Element;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+  
 class ElementController extends Controller
 {
     public function store(Request $request){
@@ -18,7 +18,7 @@ class ElementController extends Controller
 
         Element::create($request->all());
 
-        return redirect()->route('admin.addcomponent')
+        return redirect()->back()
             ->with('message', "element added Successfully");
     }
 

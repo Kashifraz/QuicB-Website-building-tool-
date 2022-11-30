@@ -6,18 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Component extends Model
+class Elementgroup extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'component_tag',
-        'description',
+        'tag',
+        'component_id',
     ];
 
-    public function elementgroups(){
+    public function component(){
 
-        return $this->hasMany(Elementgroup::class);
+        return $this->belongsTo(Component::class);
+    }
+
+    public function elements(){
+
+        return $this->hasMany(Element::class);
     }
 }
