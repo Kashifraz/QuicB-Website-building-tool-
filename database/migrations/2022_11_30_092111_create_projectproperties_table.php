@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Project;
+use App\Models\Projectelement;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('projectcomponents', function (Blueprint $table) {
+        Schema::create('projectproperties', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Project::class);
-            $table->string('name');
-            $table->string('component_tag');
-            $table->text('description');
+            $table->string('property');
+            $table->string('value');
+            $table->foreignIdFor(Projectelement::class);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projectcomponents');
+        Schema::dropIfExists('projectproperties');
     }
 };

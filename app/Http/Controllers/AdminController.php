@@ -107,7 +107,7 @@ class AdminController extends Controller
             $profitValues = $this->CalculateProfit();
             $PieChart = $this->RenderPieChart();
             $BarChart = $this->RenderBarChart();
-            return Inertia::render('adminDashboard', [
+            return Inertia::render('Admin/adminDashboard', [
                 'profitValues' => $profitValues,
                 'PieChart' => $PieChart,
                 'BarChart' => $BarChart,

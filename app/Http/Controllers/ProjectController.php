@@ -32,9 +32,22 @@ class ProjectController extends Controller
     }
     
     public function getCanvas(Project $project){
-
+        $projectComponents    = $project->projectcomponents;
+        foreach ($projectComponents as $projectComponent) {
+            $projectElementgroups = $projectComponent->projectelementgroups;
+            foreach ($projectElementgroups as $projectElementgroup) {
+                $projectElements = $projectElementgroup->projectelements;
+                foreach ($projectElements as $projectElement) {
+                     $projectElement->projectattributes;
+                     $projectElement->projectproperties;
+                }
+            }
+        }
+        
         return Inertia::render('canvas',[
-            'project' => $project,
+            'project'           => $project,
+            'projectComponents' => $projectComponents,
+            'components' =>Component::all(),
         ]);
     }
 

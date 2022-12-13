@@ -56,37 +56,45 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function allDelete(Request $request)
+    {
+        $ids = json_decode($request->ids);
+        User::whereIn('id', $ids)->delete();
+
+        return redirect()->route('customers.index')
+        ->with('message',' Selected customer(s) deleted successfully.');
+    }
+
     public function generatePDF(Request $request)
     {
         $totalRevenue = $this->CalculateRevenue();
         $totalExpenses = app('App\Http\Controllers\ExpenseController')
-        ->SumExpenses();
+            ->SumExpenses();
         $totalUsers = User::all()->count();
         $totalSubscribers = DB::table('subscriptions')->count();
-         
+
         $data = [
             'totalRevenue' => $totalRevenue,
             "totalExpenses" => $totalExpenses,
-            'totalUsers'=> $totalUsers,
-            'totalSubscribers'=> $totalSubscribers,
+            'totalUsers' => $totalUsers,
+            'totalSubscribers' => $totalSubscribers,
             'date' => date('d/M/Y'),
         ];
         $pdf = Pdf::loadView('report', $data);
         return $pdf->download('invoice.pdf');
     }
 
-    
+
     public function CalculateRevenue($filter = null)
-    {   
-        if($filter == NULL){
+    {
+        if ($filter == NULL) {
             $revenueBasic = DB::table('subscriptions')->where('name', 'basic')
-            ->count();
+                ->count();
             $revenuePremium = DB::table('subscriptions')->where('name', 'premium')
-            ->count();
+                ->count();
             $revenue = ($revenueBasic * 10) + ($revenuePremium * 100);
         }
-    return $revenue;
-        
+        return $revenue;
     }
 
 
@@ -107,6 +115,7 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')
+        ->with('message',' Customer deleted successfully.');
     }
 }

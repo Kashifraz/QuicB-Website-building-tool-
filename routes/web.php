@@ -12,6 +12,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ElementController;
 use App\Http\Controllers\ElementgroupController;
+use App\Http\Controllers\ProjectcomponentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PropertyController;
 use App\Models\Elementgroup;
@@ -26,10 +27,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $user_id = Auth()->user()->id;
-   
+    $user = Auth()->user();
+    $projects = $user->projects;
     return Inertia::render('Dashboard',[
-        "user_id" => $user_id
+        "user_id"  => $user->id,
+        "projects" => $projects,
     ]);
 })->middleware(['auth', 'verified', 'notadmin'])->name('dashboard');
 
@@ -46,6 +48,9 @@ Route::middleware(['auth', 'subscriber', 'notadmin'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/customers', CustomerController::class)
         ->only(['index', 'destroy']);
+    Route::delete('/admin/allcustomers', [CustomerController::class,"allDelete"])
+    ->name('customers.alldelete');
+    
     Route::get('/admin/subscribers', [CustomerController::class, 'subscribers'])
         ->name('customers.subscribers');
     Route::resource('/admin/expense', ExpenseController::class)
@@ -104,6 +109,8 @@ Route::middleware(['auth', 'notadmin'])->group(function () {
     Route::get('/showcss', [ProjectController::class, "generateCSS"]);
     Route::post('/createproject',[ProjectController::class, "createProject"])->name('project.create');
     Route::get('/canvas/{project}', [ProjectController::class, "getCanvas"])->name('project.canvas');
+    Route::post('/copyproject',[ProjectcomponentController::class, "copyComponent"])->name('component.copy');
+    Route::post('/customization.submit',[ProjectcomponentController::class, "submitCustomization"])->name('customization.submit');
 });
 
 require __DIR__ . '/auth.php';

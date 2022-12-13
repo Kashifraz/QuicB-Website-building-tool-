@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import { useForm } from "@inertiajs/inertia-react";
+import { usePage } from "@inertiajs/inertia-react";
 import Pagination from "./Pagination";
-import { isEmpty } from "lodash";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { filter } from "lodash";
 
 export default function DataTable({ customers, IsSubscriber, Search, Filter }) {
+    const { flash } = usePage().props;
+
     function destroy(e) {
         if (confirm("Are you sure you want to delete this user?")) {
             Inertia.delete(route("customers.destroy", e.currentTarget.id));
@@ -15,6 +20,25 @@ export default function DataTable({ customers, IsSubscriber, Search, Filter }) {
         search: Search,
         filter: Filter,
     });
+
+    const [isChecked, setIsChecked] = useState([]);
+
+    const allDelete = async () => {
+
+        if (confirm("Are you sure you want to delete all selected users?")) {
+            Inertia.delete(route("customers.alldelete", { ids: JSON.stringify(isChecked) }));
+        }
+    }
+
+    const handleCheckbox = (e) => {
+        const { value, checked } = e.target;
+        // console.log(checked);
+        if (checked) {
+            setIsChecked([...isChecked, value]);
+        } else {
+            setIsChecked(isChecked.filter((e) => e !== value));
+        }
+    }
 
     function search(e) {
         e.preventDefault();
@@ -28,6 +52,7 @@ export default function DataTable({ customers, IsSubscriber, Search, Filter }) {
 
     return (
         <div className="overflow-x-auto relative  sm:rounded-lg">
+           
             {!IsSubscriber && (
                 <div class="grid grid-cols-5 gap-4">
                     <div className="col-span-1"></div>
@@ -106,19 +131,13 @@ export default function DataTable({ customers, IsSubscriber, Search, Filter }) {
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="p-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="checkbox-all-search"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                />
-                                <label
-                                    htmlFor="checkbox-all-search"
-                                    className="sr-only"
-                                >
-                                    checkbox
-                                </label>
-                            </div>
+                            <button
+                                onClick={allDelete}
+                                type="button"
+                                className=" py-2 text-lg  rounded"
+                            >
+                                <FontAwesomeIcon icon={faTrash} />
+                            </button>
                         </th>
                         <th scope="col" className="py-3 px-6">
                             Id
@@ -128,6 +147,9 @@ export default function DataTable({ customers, IsSubscriber, Search, Filter }) {
                         </th>
                         <th scope="col" className="py-3 px-6">
                             Email
+                        </th>
+                        <th scope="col" className="py-3 px-6">
+                            Subscription Status
                         </th>
                         {IsSubscriber && (
                             <>
@@ -160,6 +182,9 @@ export default function DataTable({ customers, IsSubscriber, Search, Filter }) {
                                     <input
                                         id="checkbox-table-search-1"
                                         type="checkbox"
+                                        value={customer.id}
+                                        checked={customer.isChecked}
+                                        onChange={(e) => handleCheckbox(e)}
                                         className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                     />
                                     <label
@@ -178,6 +203,9 @@ export default function DataTable({ customers, IsSubscriber, Search, Filter }) {
                             </th>
                             <td className="py-4 px-6">{customer.name}</td>
                             <td className="py-4 px-6">{customer.email}</td>
+                            <td className="py-4 px-6">
+                                {customer.stripe_id != null ? (<>Subscriber</>) : (<>Not Subscribed</>)}
+                            </td>
 
                             {IsSubscriber && (
                                 <>

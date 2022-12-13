@@ -15,4 +15,8 @@ class Project extends Model
         'public',
         'user_id',
     ];
+
+    public function projectcomponents(){
+        return $this->hasMany(Projectcomponent::class);
+    }
 }
