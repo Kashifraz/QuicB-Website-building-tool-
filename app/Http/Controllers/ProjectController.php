@@ -46,6 +46,7 @@ class ProjectController extends Controller
         
         return Inertia::render('canvas',[
             'project'           => $project,
+            // 'elements'          => $projectElements,
             'projectComponents' => $projectComponents,
             'components' =>Component::all(),
         ]);

@@ -17,15 +17,15 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PropertyController;
 use App\Models\Elementgroup;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
+// Route::get('/', function () {
+//     return Inertia::render('home', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+Route::view('/','home');
 Route::get('/dashboard', function () {
     $user = Auth()->user();
     $projects = $user->projects;
@@ -53,8 +53,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     
     Route::get('/admin/subscribers', [CustomerController::class, 'subscribers'])
         ->name('customers.subscribers');
+    
+    //expense routes
+
     Route::resource('/admin/expense', ExpenseController::class)
-        ->only(['index', 'store', 'destroy']);
+        ->only(['index', 'store', 'destroy']);    
+    Route::delete('/admin/allexpenses', [ExpenseController::class,"allDelete"])
+    ->name('expense.alldelete');
     Route::get('/admin/login', [AdminController::class, 'showLogin'])
         ->name('admin.login')->middleware('guest');
     Route::get('/admin/register', [AdminController::class, 'RegisterForm'])

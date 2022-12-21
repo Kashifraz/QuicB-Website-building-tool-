@@ -3,6 +3,7 @@ import AdminAuthenticatedLayout from "@/Layouts/AdminAuthenticatedLayout";
 import { Head, Link } from "@inertiajs/inertia-react";
 import { usePage, useForm } from "@inertiajs/inertia-react";
 import DataTable from "@/Components/DataTable";
+import Alertbox from "@/Components/Alertbox";
 
 export default function Dashboard(props) {
     const { flash } = usePage().props;
@@ -22,6 +23,9 @@ export default function Dashboard(props) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className=" overflow-hidden ">
+                    {flash.message && 
+                            <Alertbox message = {flash.message}  />
+                        }
                         <div className="p-6 bg-white border-b border-gray-200">
                             <a
                                 href={route("report.pdf")}

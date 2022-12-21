@@ -5,6 +5,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
+import Alertbox from "@/Components/Alertbox";
 
 export default function Register(props) {
     const {flash} = usePage().props;
@@ -51,16 +52,15 @@ export default function Register(props) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div> 
+                    {flash.message && 
+                        <Alertbox message = {flash.message}  />
+                    }
+                    </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
                             <div className="grid grid-cols-2 gap-0  ">
-                                <div> 
-                                {flash.message && (
-                                <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-                                <span class="font-medium">Danger alert!</span> {flash.message}
-                              </div>
-                            )}
-                                </div>
+                                
                                 <form onSubmit={submit}>
                                     <div>
                                         <InputLabel

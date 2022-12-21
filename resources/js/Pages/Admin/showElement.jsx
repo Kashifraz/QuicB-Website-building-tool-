@@ -6,6 +6,7 @@ import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import AttributeModel from "../../Components/AttributeModel";
 import PropertyModal from "../../Components/PropertyModal";
 import { Inertia } from "@inertiajs/inertia";
+import Alertbox from "@/Components/Alertbox";
 
 export default function expense(props) {
     const { flash } = usePage().props;
@@ -40,15 +41,9 @@ export default function expense(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className=" overflow-hidden sm:rounded-lg">
                         <div className="p-6 ">
-                            {flash.message && (
-                                <div
-                                    className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-                                    role="alert"
-                                >
-                                    <span className="font-medium">Success!</span>{" "}
-                                    {flash.message}
-                                </div>
-                            )}
+                        {flash.message && 
+                            <Alertbox message = {flash.message}  />
+                        }
                             <div>
                                 <div class="flex items-center space-x-4 bg-white rounded mb-6 p-6 shadow">
                                     <div class="flex-shrink-0">

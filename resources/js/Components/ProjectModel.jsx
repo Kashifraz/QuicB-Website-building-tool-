@@ -1,14 +1,14 @@
 import React from "react";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
 import InputError from "@/Components/InputError";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCirclePlus} from "@fortawesome/free-solid-svg-icons"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus, faCircleCheck, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function (props) {
     const [showModal, setShowModal] = React.useState(false);
     const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
-        
+
         title: " ",
         description: " ",
         public: false,
@@ -34,13 +34,75 @@ export default function (props) {
 
     return (
         <>
-            <button
-                className="bg-blue-700 text-white active:bg-blue-800 font-bold  text px-3 py-3 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150"
-                type="button"
-                onClick={() => setShowModal(true)}
-            >
-            <FontAwesomeIcon icon={faCirclePlus} /> Create Project 
-            </button>
+            <div class="max-w-full py-4 px-8 bg-gradient-to-r from-indigo-100 to-purple-300 shadow-lg rounded-lg mt-5">
+                <div class="flex justify-center sm:justify-end -mt-9">
+                    <button type="submit" id=""
+                        class=" object-cover rounded-full text-white text-5xl active:text-gray-600 -mt-24 -mr-12">
+                        <img src="/assets/images/excited.png" class="img-fluid rounded-top max-w-full" width="450" />
+                    </button>
+                </div>
+                <div className="-mt-72">
+                    <ul class="max-w-md divide-gray-200 dark:divide-gray-700">
+                        <li class="pb-3 sm:pb-2">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 text-2xl text-blue-800">
+                                <FontAwesomeIcon icon={faSquareCheck} />
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-lg font-bold text-gray truncate dark:text-white">
+                                        Create Project on QUICB
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    
+                        <li class="pb-3 sm:pb-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 text-2xl text-blue-800">
+                                <FontAwesomeIcon icon={faSquareCheck} />
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-lg font-bold text-gray truncate dark:text-white">
+                                        Import Component into your project
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="pb-3 sm:pb-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 text-2xl text-blue-800">
+                                <FontAwesomeIcon icon={faSquareCheck} />
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-lg font-bold text-gray truncate dark:text-white">
+                                        Customize imported Components of your project
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="pb-3 sm:pb-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 text-2xl text-blue-800">
+                                <FontAwesomeIcon icon={faSquareCheck} />
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-lg font-bold text-gray truncate dark:text-white">
+                                        Download Full fledge Source Code
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <button
+                    className="bg-blue-700 text-white active:bg-blue-800 font-bold  text px-3 py-3 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setShowModal(true)}
+                >
+                    <FontAwesomeIcon icon={faCirclePlus} /> Create Project
+                </button>
+            </div>
+
 
             {showModal ? (
                 <>
@@ -91,12 +153,12 @@ export default function (props) {
                                             />
                                         </div>
                                         <div className="mb-6">
-                                        <label class="inline-flex relative items-center cursor-pointer">
-                                            <input type="checkbox" value="" class="sr-only peer" 
-                                            name="public" onChange={onHandleChange} />
-                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                            <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Public Project</span>
-                                        </label>
+                                            <label class="inline-flex relative items-center cursor-pointer">
+                                                <input type="checkbox" value="" class="sr-only peer"
+                                                    name="public" onChange={onHandleChange} />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Public Project</span>
+                                            </label>
                                         </div>
                                         <button
                                             type="submit"

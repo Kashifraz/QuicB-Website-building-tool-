@@ -21,6 +21,15 @@ class ExpenseController extends Controller
         ]);
     }
 
+    public function allDelete(Request $request)
+    {
+        $ids = json_decode($request->ids);
+        Expense::whereIn('id', $ids)->delete();
+
+        return redirect()->route('expense.index')
+        ->with('message',' Selected expense(s) deleted successfully.');
+    }
+
     function SumExpenses($filter = null)
     {
         if ($filter == null) {

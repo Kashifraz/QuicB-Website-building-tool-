@@ -1,13 +1,14 @@
 import React from "react";
 import AdminAuthenticatedLayout from "@/Layouts/AdminAuthenticatedLayout";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
+import InputError from "@/Components/InputError";
 
 export default function ExpenseModal() {
     const [showModal, setShowModal] = React.useState(false);
     const { data, setData, post, processing, errors, reset } = useForm({
         title: "",
         expensetype: "salary",
-        amount: 0,
+        amount: null,
         description: "",
     });
 
@@ -22,8 +23,13 @@ export default function ExpenseModal() {
 
     const submit = (e) => {
         e.preventDefault();
-        setShowModal(false);
-        post(route("expense.store"));
+        post(route("expense.store"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                setShowModal(false);
+                reset();
+            } ,
+        });
     };
 
     return (
@@ -57,6 +63,10 @@ export default function ExpenseModal() {
                                                 placeholder="Expense short title"
                                                 required=""
                                                 onChange={onHandleChange}
+                                            />
+                                            <InputError
+                                                message={errors.title}
+                                                className="mt-2"
                                             />
                                         </div>
                                         <div className="mb-6">
@@ -92,6 +102,7 @@ export default function ExpenseModal() {
                                                     Hardware & Software
                                                 </option>
                                             </select>
+                                           
                                         </div>
                                         <div className="mb-6">
                                             <label
@@ -108,6 +119,10 @@ export default function ExpenseModal() {
                                                 required=""
                                                 onChange={onHandleChange}
                                             />
+                                            <InputError
+                                                message={errors.amount}
+                                                className="mt-2"
+                                            />
                                         </div>
                                         <div className="mb-6">
                                             <label
@@ -123,6 +138,10 @@ export default function ExpenseModal() {
                                                 placeholder="Leave a comment..."
                                                 onChange={onHandleChange}
                                             ></textarea>
+                                            <InputError
+                                                message={errors.description}
+                                                className="mt-2"
+                                            />
                                         </div>
 
                                         <button

@@ -2,6 +2,7 @@ import React from "react";
 import AdminAuthenticatedLayout from "@/Layouts/AdminAuthenticatedLayout";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
 import ProfileForm from "@/Components/ProfileForm";
+import Alertbox from "@/Components/Alertbox";
 
 export default function profile(props) {
     const { flash } = usePage().props;
@@ -21,17 +22,9 @@ export default function profile(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className=" overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 border-b border-gray-200 ">
-                            {flash.message && (
-                                <div
-                                    className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-                                    role="alert"
-                                >
-                                    <span className="font-medium">
-                                        Success!
-                                    </span>{" "}
-                                    {flash.message}
-                                </div>
-                            )}
+                        {flash.message && 
+                            <Alertbox message = {flash.message}  />
+                        }
 
                             <ProfileForm user={props.auth.user} />
                         </div>

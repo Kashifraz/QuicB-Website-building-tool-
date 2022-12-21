@@ -8,8 +8,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rules;
 use Carbon\carbon;
 
@@ -138,9 +136,9 @@ class AdminController extends Controller
                 'password' => Hash::make($request->password),
                 'is_admin' => true,
             ]);
-            event(new Registered($user));
-            Auth::login($user);
-            return redirect(RouteServiceProvider::HOME);
+            
+            return redirect()->route('admin.register')
+            ->with('message','new admin account created successfully');
         }
 
         abort('404');

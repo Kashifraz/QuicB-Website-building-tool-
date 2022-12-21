@@ -5,7 +5,7 @@ import { usePage } from "@inertiajs/inertia-react";
 import ProjectModel from "@/Components/ProjectModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faSquareUpRight,faClock } from "@fortawesome/free-solid-svg-icons";
-
+import Alertbox from "@/Components/Alertbox";
 
 export default function Dashboard(props) {
     const { flash } = usePage().props;
@@ -33,11 +33,9 @@ export default function Dashboard(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="overflow-hidden sm:rounded-lg">
                         <div className="p-6 ">
-                            {flash.message && (
-                                <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-                                    <span class="font-medium">Danger alert!</span> {flash.message}
-                                </div>
-                            )}
+                        {flash.message && 
+                            <Alertbox message = {flash.message}  />
+                        }
                             <ProjectModel user_id={props.user_id} />
 
 

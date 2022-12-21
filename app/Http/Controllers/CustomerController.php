@@ -81,7 +81,7 @@ class CustomerController extends Controller
             'date' => date('d/M/Y'),
         ];
         $pdf = Pdf::loadView('report', $data);
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('BussinessReport.pdf');
     }
 
 
