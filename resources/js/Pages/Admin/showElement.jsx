@@ -6,7 +6,7 @@ import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import AttributeModel from "../../Components/AttributeModel";
 import PropertyModal from "../../Components/PropertyModal";
 import { Inertia } from "@inertiajs/inertia";
-import Alertbox from "@/Components/Alertbox";
+import Alertbox from "@/Components/Alertbox"; 
 
 export default function expense(props) {
     const { flash } = usePage().props;
@@ -37,7 +37,7 @@ export default function expense(props) {
         >
             <Head title="adminDashboard" />
 
-            <div className="py-12">
+            <div className="py-4">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className=" overflow-hidden sm:rounded-lg">
                         <div className="p-6 ">

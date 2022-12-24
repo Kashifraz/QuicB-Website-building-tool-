@@ -2,72 +2,58 @@ import React, { useState, useRef } from "react";
 import { Head, Link } from "@inertiajs/inertia-react";
 import { usePage, useForm } from "@inertiajs/inertia-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
-import Element from "@/Components/Element";
+import { faMinus, faPlus, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Elementgroup from "@/Components/Elementgroup";
+import route from "../../../vendor/tightenco/ziggy/src/js";
 
-export default function projectComponent(props) {
-    const contentRef = useRef(new Array());
-    contentRef.current = [];
-    const [content, setContent] = useState();
-
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-    //     console.log(`Name: ${contentRef[1]}`);
-    //   }
-      
-    const submit = (e) => {
-        e.preventDefault();
-        console.log(contentRef.current);
-        // post(route("admin.register"));
-    };
-
-    const addToRef = (el) =>{
-        if(el && !contentRef.current.includes(el)){
-            contentRef.current.push(el.value);
-           
-        }
-       
-    }
+export default function ProjectComponent(props) {
+    const [show, setShow] = useState(false);
+    const [Component_id, setId] = useState();
     return (
-        <div >
-            <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
-                {props.projectComponent.projectelementgroups.length == 0 ? (<> <div>No Element Groups exist</div> </>) : (
-                    <>
-                        {props.projectComponent.projectelementgroups.map((Elementgroup) => (
-                            <>
-                                <li className="py-3 sm:py-4">
-                                    <div className="flex items-center space-x-4">
-                                        <div className="flex-shrink-0">
-                                            <img className="w-12 h-12 rounded-full" src="https://umbraco.com/media/r5nfrprt/code_too.png?quality=80" alt="Neil image" />
-                                        </div>
-                                        <div className="flex-1 min-w-0 ">
+        <div key={props.projectComponent.id} className="mx-20 bg-white border-b border-gray-200 rounded">
+            <div className=" w-full sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div className="flex justify-between items-center ">
+                    <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">{props.projectComponent.name} Component </h5>
+                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                        <div class="inline-flex " >
+                            <Link 
+                                href={route('projectcomponent.delete',props.projectComponent.id)}
+                                className="bg-red-800 active:bg-red-800 font-bold text-white  rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-3 mb-3 ease-linear transition-all duration-150 py-2 px-3">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </Link>
 
-                                            <p className="text-lg font-bold text-gray-900 truncate dark:text-white">
-                                                {Elementgroup.name}
-                                            </p>
-                                            <p className="text-lg text-gray-500  dark:text-gray-400">
-                                                {Elementgroup.tag}
-                                            </p>
+                            {show && Component_id == props.projectComponent.id ? (<>
+                                <button onClick={() => {
+                                    setShow(false);
+                                    setId(null);
+                                }}
+                                    type="button" className="bg-gray-200 text-gray active:bg-gray-800 font-bold text   rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2 px-3">
+                                    <FontAwesomeIcon icon={faMinus} />
+                                </button>
+                            </>) : (<>
+                                <button onClick={() => {
+                                    setShow(true);
+                                    setId(props.projectComponent.id);
+                                }}
+                                    type="button" className="bg-gray-200 text-gray active:bg-gray-800 font-bold text   rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2 px-3">
+                                    <FontAwesomeIcon icon={faPlus} />
+                                </button>
+                            </>)}
 
-                                        </div>
 
-                                    </div>
-                                    {Elementgroup.projectelements.length == 0 ? (<> <div className="mt-6 ml-16">No elements added yet</div> </>) : (
-                                        <>
-                                            {Elementgroup.projectelements.map((element, i) => (
-                                                <>
-                                                  <Element element = {element} index={i} />  
-                                                </>
-                                            ))}
-                                        </>
-                                    )}
 
-                                </li>
-                            </>
-                        ))}
-                    </>
-                )}
-            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                {show &&
+                    <div className="flow-root" >
+                        <Elementgroup projectComponent={props.projectComponent} />
+                    </div>
+                }
+
+            </div>
+
         </div>
     );
 }

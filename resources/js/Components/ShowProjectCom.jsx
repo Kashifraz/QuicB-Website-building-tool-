@@ -20,7 +20,7 @@ export default function ShowProjectCom(props) {
         <>
             {props.showSection ? (
                 <>
-                    <div class=" mx-12 grid grid-cols-2 gap-4 md:grid-cols-4 overflow-y-auto max-h-80 rounded-lg px-5 pb-5 bg-blue-100 ">
+                    <div class=" mx-20 mb-5 grid grid-cols-2 gap-4 md:grid-cols-4 overflow-y-auto max-h-80 rounded-lg px-5 pb-5 bg-gradient-to-r from-indigo-100 to-purple-300 ">
                         {props.components.map((component) => (
                             <div class="max-w-sm py-4 px-8 bg-white shadow-lg rounded-lg mt-10">
                                 <div class="flex justify-center sm:justify-end -mt-9">

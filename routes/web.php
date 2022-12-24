@@ -12,8 +12,11 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ElementController;
 use App\Http\Controllers\ElementgroupController;
+use App\Http\Controllers\ProjectattributesController;
 use App\Http\Controllers\ProjectcomponentController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectelementController;
+use App\Http\Controllers\ProjectpropertiesController;
 use App\Http\Controllers\PropertyController;
 use App\Models\Elementgroup;
 
@@ -25,7 +28,8 @@ use App\Models\Elementgroup;
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::view('/','home');
+
+Route::get('/',[CustomerController::class,"getHomepage"]);
 Route::get('/dashboard', function () {
     $user = Auth()->user();
     $projects = $user->projects;
@@ -115,7 +119,14 @@ Route::middleware(['auth', 'notadmin'])->group(function () {
     Route::post('/createproject',[ProjectController::class, "createProject"])->name('project.create');
     Route::get('/canvas/{project}', [ProjectController::class, "getCanvas"])->name('project.canvas');
     Route::post('/copyproject',[ProjectcomponentController::class, "copyComponent"])->name('component.copy');
-    Route::post('/customization.submit',[ProjectcomponentController::class, "submitCustomization"])->name('customization.submit');
+    Route::post('/customization/element',[ProjectelementController::class, "customizeElement"])->name('customization.element');
+    Route::post('/customization/attribute',[ProjectattributesController::class, "customizeAttribute"])->name('customization.attribute');
+    Route::post('/customization/property',[ProjectpropertiesController::class, "customizeProperty"])->name('customization.property');
+    Route::get('/projectcomponent/delete/{projectcomponent}', [ProjectcomponentController::class, 'deleteProjectcomponent'])->name('projectcomponent.delete');
+    Route::get('/project/preview/{project}', [ProjectController::class, 'previewProject'])->name('project.preview');
+    Route::get('/project/download/{project}', [ProjectController::class, 'downloadCode'])->name('project.download');
 });
+
+Route::get('/project/share/{project}', [ProjectController::class, 'shareProject'])->name('project.share');
 
 require __DIR__ . '/auth.php';

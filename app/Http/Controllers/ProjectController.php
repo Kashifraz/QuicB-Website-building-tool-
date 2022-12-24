@@ -7,6 +7,8 @@ use App\Models\Element;
 use App\Models\Project;
 use Attribute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -21,12 +23,12 @@ class ProjectController extends Controller
 
         $project = Project::create($request->all());
         $projectPath = "Project_".$request->user_id."_".$project->id;
-        Storage::makeDirectory("project/".$projectPath);
-        Storage::makeDirectory("project/".$projectPath.'/'.'assets');
+        Storage::makeDirectory("public/project/".$projectPath);
+        Storage::makeDirectory("public/project/".$projectPath.'/'.'assets');
 
         // creating source code files
-        Storage::put("project/".$projectPath."/"."index.html", "html file");
-        Storage::put("project/".$projectPath."/"."styles.css", "Css file");
+        Storage::put("public/project/".$projectPath."/"."index.html", "html file");
+        Storage::put("public/project/".$projectPath."/"."styles.css", "Css file");
 
         return redirect()->route('project.canvas', $project->id);
     }
@@ -43,51 +45,86 @@ class ProjectController extends Controller
                 }
             }
         }
-        
+       
+        $ShareLink = url("project/share/".$project->id);
         return Inertia::render('canvas',[
             'project'           => $project,
-            // 'elements'          => $projectElements,
             'projectComponents' => $projectComponents,
             'components' =>Component::all(),
+            'link' => $ShareLink,
         ]);
     }
 
-    public function generateHtml()
-    {
-        $componentOpen = null;
-        $componentClose = null;
-        $component = Component::find(23);
-        $componentOpen = " <".$component->component_tag."".">";
-        Storage::append('project/Project_28_9/index.html', $componentOpen);
-        $elementgroupOpen = null;
-        foreach ($component->elementgroups as $elementgroup) {
-            $elementOpen = null;
-            $elementClose = null;
-            $content = null;
-            $elementgroupOpen = "<".$elementgroup->tag."".">";
-            Storage::append('project/Project_28_9/index.html', $elementgroupOpen);
-            foreach ($elementgroup->elements as $element) {
-                if(!$element->is_parent){
-                    $elementOpen = $elementOpen. " <".$element->tag."".">";
-                    Storage::append('project/Project_28_9/index.html', $elementOpen);
-                    $content = $content.$element->content."";
-                    Storage::append('project/Project_28_9/index.html', $content);
-                    $elementClose = $elementClose. "</".$element->tag."".">";
-                    Storage::append('project/Project_28_9/index.html', $elementClose);
-                }
-                
-            }
-          $elementgroup = " </".$elementgroup->tag."".">";
-          Storage::append('project/Project_28_9/index.html', $elementgroup);
-        }
-        $componentClose = " </".$component->component_tag."".">";
-        Storage::append('project/Project_28_9/index.html', $componentClose);
-        Storage::append('project/Project_28_9/index.html', "</body>");
-        Storage::append('project/Project_28_9/index.html', "</html>");
+    public function downloadCode(Project $project){
 
-        return Storage::download('project/Project_28_9/index.html');
+        $this->generateHtml($project);
 
     }
+
+    public function generateHtml(Project $project)
+    {
+
+        $componentOpen = null;
+        $componentClose = null;
+        $path = "public/project/Project_".$project->user_id."_".$project->id."/index.html";
+        $customPath = "D:\FYP\QuicB\storage\app\public/project/Project_".$project->user_id."_".$project->id."/index.html";;
+        //clearing previous content in the file
+        $fh = fopen( $customPath, 'w' );
+        $headerCode =
+'
+<!DOCTYPE html>
+<html>
+<head>
+<title>preview</title>
+</head>
+<body>
+';
+        //adding html and body tags
+        Storage::append($path, $headerCode);
+        foreach ($project->projectcomponents as $component) {
+            //appending container to HTML file
+            $container = " <div "."id= 'container_".$component->name."' >";
+            Storage::append($path, $container);
+            //appending component tag
+            $componentOpen = " <".$component->component_tag." class = '".$component->name."' >";
+            Storage::append($path, $componentOpen);
+            $elementgroupOpen = null;
+            foreach ($component->projectelementgroups as $elementgroup) {
+                $elementOpen = null;
+                $elementClose = null;
+                $content = null;
+                 //appending elementgroup tag
+                $elementgroupOpen = "<".$elementgroup->tag." class = '".$elementgroup->name."' >";
+                Storage::append($path, $elementgroupOpen);
+                foreach ($elementgroup->projectelements as $element) {
+                    $attributes = null;
+                    if(!$element->is_parent){
+                        foreach ($element->projectattributes as $attribute ) {
+                            $attributes= $attributes.$attribute->name.' = "'.$attribute->value.'" ';   
+                        }
+                        $elementOpen = $elementOpen. " <".$element->tag." ".$attributes." >";
+                        Storage::append($path, $elementOpen);
+                        $content = $content.$element->content."";
+                        Storage::append($path, $content);
+                        $elementClose = $elementClose. "</".$element->tag."".">";
+                        Storage::append($path, $elementClose);
+                    }
+                    
+                }
+              $elementgroup = " </".$elementgroup->tag."".">";
+              Storage::append($path, $elementgroup);
+            }
+            $componentClose = " </".$component->component_tag."".">";
+            Storage::append($path, $componentClose); 
+              //appending container to HTML file
+              $container = " </".$component->component_tag.">";
+              Storage::append($path, $container); 
+        }
+        
+        Storage::append($path, "</body>");
+        Storage::append($path, "</html>");
+    }
+
 
     public function GenerateCSS(){
         
@@ -114,4 +151,26 @@ class ProjectController extends Controller
         }
         echo  nl2br($CSS);
     }
+
+    public function previewProject(Project $project){
+        if(Auth::user()->id == $project->user_id ){
+            $path = "public/project/Project_".$project->user_id."_".$project->id."/index.html";
+            $concatPath = Storage::path($path);
+            return response()->file($concatPath);
+        }else{
+            echo "you are not allowed to access";
+        }
+    }
+
+    public function shareProject(Project $project){
+        if($project->public){
+            $path = "public/project/Project_".$project->user_id."_".$project->id."/index.html";
+            $concatPath = Storage::path($path);
+            return response()->file($concatPath);
+        }else{
+            echo "you are not allowed to access";
+        }
+    }
+  
 }
+  

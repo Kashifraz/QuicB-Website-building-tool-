@@ -2,6 +2,8 @@ import React from "react";
 import AdminAuthenticatedLayout from "@/Layouts/AdminAuthenticatedLayout";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
 import InputError from "@/Components/InputError";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function (props) {
     const [showModal, setShowModal] = React.useState(false);
@@ -32,11 +34,11 @@ export default function (props) {
     return (
         <>
             <button
-                className="bg-blue-700 ml-2 text-white active:bg-blue-800 font-bold text-sm px-3 py-3 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150"
+                className="bg-blue-700 ml-2 text-white active:bg-blue-800 font-bold text-md px-3 py-3 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150"
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                Add Property
+               <FontAwesomeIcon icon={faCirclePlus}/> Add Property
             </button>
 
            
@@ -61,7 +63,6 @@ export default function (props) {
                                                 name="property"
                                                 value={data.property}
                                                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                                                placeholder="Enter attribute name"
                                                 required=""
                                                 onChange={onHandleChange}
                                             />
@@ -83,7 +84,6 @@ export default function (props) {
                                                 name="value"
                                                 value={data.value}
                                                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                                                placeholder="Enter attribute name"
                                                 required=""
                                                 onChange={onHandleChange}
                                             />

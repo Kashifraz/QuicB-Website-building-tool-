@@ -33,12 +33,8 @@ export default function Dashboard(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="overflow-hidden sm:rounded-lg">
                         <div className="p-6 ">
-                        {flash.message && 
-                            <Alertbox message = {flash.message}  />
-                        }
+                       
                             <ProjectModel user_id={props.user_id} />
-
-
 
                             <div class=" w-full sm:p-8 mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                                 <div class="flex justify-between items-center mb-4">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Pdf;
@@ -13,6 +14,17 @@ use function PHPUnit\Framework\isEmpty;
 
 class CustomerController extends Controller
 {
+    public function getHomepage(){
+        if(Auth::user() != null && Auth::user()->is_admin){
+            return redirect()->route('admin.dashboard')
+            ->with('message',"You are already logged In");
+        }
+        if(Auth::user() != null){
+            return redirect()->route('dashboard')
+            ->with('message',"You are already logged In"); 
+        }
+        return view('home');
+    }
 
     public function index(Request $request)
     {

@@ -30,7 +30,7 @@ class ProjectcomponentController extends Controller
                 'tag'           => $elementgroup->tag,
                 'projectcomponent_id'  => $projectComponent->id,
             ]);
-            
+
             foreach ($elementgroup->elements as $element) {
                 $projectElement = Projectelement::create([
                     'tag'                    => $element->tag,
@@ -61,8 +61,19 @@ class ProjectcomponentController extends Controller
             ->with('message', 'component added to project');
     }
 
-    public function submitCustomization(Request $request){
+    public function deleteProjectcomponent(Projectcomponent $projectcomponent)
+    {
 
-        return $request;
+        foreach ($projectcomponent->projectelementgroups as $elementgroup) {
+            foreach ($elementgroup->projectelements as $element) {
+                Projectattribute::where("projectelement_id", "=", $element->id)->delete();
+                Projectproperty::where("projectelement_id", "=", $element->id)->delete();
+                $element->delete();
+            }
+            $elementgroup->delete();
+        }
+        $projectcomponent->delete();
+        return redirect()->route('project.canvas', $projectcomponent->project)
+            ->with('message', 'component deleted successfully');
     }
 }
