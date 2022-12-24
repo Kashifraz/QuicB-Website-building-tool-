@@ -4,19 +4,19 @@ import { Head, Link } from "@inertiajs/inertia-react";
 import { usePage } from "@inertiajs/inertia-react";
 import ProjectModel from "@/Components/ProjectModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faSquareUpRight,faClock } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faSquareUpRight, faClock } from "@fortawesome/free-solid-svg-icons";
 import Alertbox from "@/Components/Alertbox";
 
 export default function Dashboard(props) {
     const { flash } = usePage().props;
-    
+
 
     const formatDate = (dateString) => {
-        const options = {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }
         return new Date(dateString).toLocaleDateString(undefined, options)
     }
 
-    
+
     return (
         <AuthenticatedLayout
             auth={props.auth}
@@ -33,10 +33,15 @@ export default function Dashboard(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="overflow-hidden sm:rounded-lg">
                         <div className="p-6 ">
-                       
+
                             <ProjectModel user_id={props.user_id} />
 
                             <div class=" w-full sm:p-8 mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+                                <div className="p-3 mx-auto text-center item-center">
+                                    {flash.message &&
+                                        <Alertbox message={flash.message} />
+                                    }
+                                </div>
                                 <div class="flex justify-between items-center mb-4">
                                     <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Saved Projects</h5>
                                 </div>
@@ -53,7 +58,7 @@ export default function Dashboard(props) {
                                                                 </div>
                                                                 <div class="flex-1 min-w-0">
                                                                     <p class="text-2xl font-bold text-gray-900 truncate dark:text-white">
-                                                                        {project.title}                                               
+                                                                        {project.title}
                                                                     </p>
                                                                     <p class="text-lg text-gray-500  dark:text-gray-400">
                                                                         {project.description}
@@ -65,13 +70,10 @@ export default function Dashboard(props) {
                                                                 </div>
                                                                 <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                                                                     <div class="inline-flex  " >
-                                                                        <button
-                                                                            // onClick={destroyComponent}
-                                                                            id={project.id}
-                                                                            tabIndex="-1"
-                                                                            type="button" class="bg-red-700 text-white active:bg-red-800 font-bold text px-3  rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2">
+                                                                        <Link href={route("project.delete", project)}
+                                                                            class="bg-red-700 text-white active:bg-red-800 font-bold text px-3  rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2">
                                                                             <FontAwesomeIcon icon={faTrash} /> Delete
-                                                                        </button>
+                                                                        </Link>
 
                                                                         <Link
                                                                             href={route("project.canvas", project)}

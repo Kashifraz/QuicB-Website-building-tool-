@@ -115,7 +115,7 @@ Route::post('/updatepass', [ProfileController::class, 'ChangePassword'])
 //project Routes
 Route::middleware(['auth', 'notadmin'])->group(function () {
     Route::get('/showhtml', [ProjectController::class, "generateHtml"]);
-    Route::get('/showcss', [ProjectController::class, "generateCSS"]);
+    Route::get('/showcss/{project}', [ProjectController::class, "generateCSS"]);
     Route::post('/createproject',[ProjectController::class, "createProject"])->name('project.create');
     Route::get('/canvas/{project}', [ProjectController::class, "getCanvas"])->name('project.canvas');
     Route::post('/copyproject',[ProjectcomponentController::class, "copyComponent"])->name('component.copy');
@@ -123,8 +123,10 @@ Route::middleware(['auth', 'notadmin'])->group(function () {
     Route::post('/customization/attribute',[ProjectattributesController::class, "customizeAttribute"])->name('customization.attribute');
     Route::post('/customization/property',[ProjectpropertiesController::class, "customizeProperty"])->name('customization.property');
     Route::get('/projectcomponent/delete/{projectcomponent}', [ProjectcomponentController::class, 'deleteProjectcomponent'])->name('projectcomponent.delete');
+    Route::get('/project/delete/{project}', [ProjectController::class, 'deleteProject'])->name('project.delete');
     Route::get('/project/preview/{project}', [ProjectController::class, 'previewProject'])->name('project.preview');
     Route::get('/project/download/{project}', [ProjectController::class, 'downloadCode'])->name('project.download');
+    Route::get('/project/save/{project}', [ProjectController::class, 'saveProject'])->name('project.save');
 });
 
 Route::get('/project/share/{project}', [ProjectController::class, 'shareProject'])->name('project.share');

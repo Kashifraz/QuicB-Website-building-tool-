@@ -3,7 +3,7 @@ import CanvasLayout from "@/Layouts/CanvasLayout";
 import { Head, Link } from "@inertiajs/inertia-react";
 import { usePage, useForm } from "@inertiajs/inertia-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faSquarePlus, faCopy, faCircleXmark, faDownload, faShareFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faSquarePlus, faCopy, faCircleXmark, faDownload, faShareFromSquare, faSave } from "@fortawesome/free-solid-svg-icons";
 import { Inertia } from "@inertiajs/inertia";
 import Alertbox from "@/Components/Alertbox";
 import ShowProjectCom from "@/Components/ShowProjectCom";
@@ -53,7 +53,7 @@ export default function Canvas(props) {
             <div className="py-3">
                 <div className="max-w-7xl sm:px-6 lg:px-8 ml-10">
                     <div className="overflow-hidden sm:rounded-lg">
-                        <div className="p-3 mx-auto">
+                        <div className="p-3 ml-28">
                             {flash.message &&
                                 <Alertbox message={flash.message} />
                             }
@@ -80,10 +80,14 @@ export default function Canvas(props) {
                             className="bg-blue-700 text-white active:bg-blue-800 font-bold text px-3 ml-2  rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2">
                             <FontAwesomeIcon icon={faEye} /> Preview
                         </a>
-                        <Link href={route("project.download", props.project.id)}
+                        <Link href={route("project.save", props.project.id)} target="_blank"
+                            className="bg-blue-700 text-white active:bg-blue-800 font-bold text px-3 ml-2  rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2">
+                            <FontAwesomeIcon icon={faSave} /> Save Project
+                        </Link>
+                        <a href={route("project.download", props.project.id)} target="_blank"
                             className="bg-blue-700 text-white active:bg-blue-800 font-bold text px-3 ml-2  rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-3 ease-linear transition-all duration-150 py-2">
                             <FontAwesomeIcon icon={faDownload} /> Download Code
-                        </Link>
+                        </a>
                         {showlink ? (<>
                             <button
                                 tabIndex="-1" onClick={toggleLinkSection}
