@@ -43,7 +43,7 @@ class ExpenseController extends Controller
         $request->validate([
             'title' => ['required'],
             'expensetype' => ['required'],
-            'amount' => ['required'],
+            'amount' => ['required', 'integer','min:0'],
             'description' => ['required'],
         ]);
 

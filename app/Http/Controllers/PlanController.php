@@ -34,6 +34,7 @@ class PlanController extends Controller
 
     public function subscription(Request $request)
     {
+       // dd($request);
         $plan = Plan::find($request->plan);
 
         $request->user()->newSubscription($plan->name, $plan->stripe_plan)

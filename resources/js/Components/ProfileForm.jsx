@@ -114,12 +114,11 @@ export default function ProfileForm(props) {
                                 name="current_password"
                                 value={data.current_password}
                                 className="mt-1 block w-full"
-                                autoComplete="new-password"
                                 handleChange={onHandleChange}
                             />
 
                             <InputError
-                                message={errors.password}
+                                message={errors.current_password}
                                 className="mt-2"
                             />
                         </div>

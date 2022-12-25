@@ -20,23 +20,23 @@ class AdminController extends Controller
     }
 
 
-    //Authentication login
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+    // //Authentication login
+    // public function authenticate(Request $request)
+    // {
+    //     $credentials = $request->validate([
+    //         'email' => ['required', 'email'],
+    //         'password' => ['required'],
+    //     ]);
 
-        if (Auth::attempt($credentials)) {
+    //     if (Auth::attempt($credentials)) {
 
-            $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
-        }
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
-    }
+    //         $request->session()->regenerate();
+    //         return redirect()->route('admin.dashboard');
+    //     }
+    //     return back()->withErrors([
+    //         'email' => 'The provided credentials do not match our records.',
+    //     ])->onlyInput('email');
+    // }
 
     //calculating profit and loss metrices
     public function CalculateProfit()
@@ -77,7 +77,7 @@ class AdminController extends Controller
         $user = [];
         foreach ($month as $key => $value) {
             $user[] = User::where(DB::raw("DATE_FORMAT(created_at, '%M')"), $value)
-            ->whereYear('created_at', Carbon::now()->format('Y'))->count();
+                ->whereYear('created_at', Carbon::now()->format('Y'))->count();
         }
         return compact('user', 'month');
     }
@@ -88,13 +88,23 @@ class AdminController extends Controller
             'january', 'february', 'march', 'april', 'may', 'june',
             'july', 'august', 'september', 'october', 'november', 'december'
         ];
-        $user = [];
+        $revenueData = [];
         foreach ($month as $key => $value) {
 
-            $user[] = user::where(DB::raw("DATE_FORMAT(created_at, '%M')"), $value)
-            ->whereYear('created_at', Carbon::now()->format('Y'))->count();
+            $basic = DB::table('subscriptions')->where("name", "=", "basic")
+                ->where(DB::raw("DATE_FORMAT(created_at, '%M')"), $value)
+                ->whereYear('created_at', Carbon::now()->format('Y'))->count();
+
+            $premium = DB::table('subscriptions')->where("name", "=", "premium")
+                ->where(DB::raw("DATE_FORMAT(created_at, '%M')"), $value)
+                ->whereYear('created_at', Carbon::now()->format('Y'))->count();
+
+            $basic = $basic * 10;
+            $premium = $premium * 100;
+
+            $revenueData[] = $basic + $premium;
         }
-        return compact('user', 'month');
+        return compact('revenueData', 'month');
     }
 
     //showing admin dashboard
@@ -105,10 +115,12 @@ class AdminController extends Controller
             $profitValues = $this->CalculateProfit();
             $PieChart = $this->RenderPieChart();
             $BarChart = $this->RenderBarChart();
+            $LineChart = $this->RenderLineChart();
             return Inertia::render('Admin/adminDashboard', [
                 'profitValues' => $profitValues,
                 'PieChart' => $PieChart,
                 'BarChart' => $BarChart,
+                'LineChart'=> $LineChart,
             ]);
         }
         return Inertia::render('Admin/Login');
@@ -136,9 +148,9 @@ class AdminController extends Controller
                 'password' => Hash::make($request->password),
                 'is_admin' => true,
             ]);
-            
+
             return redirect()->route('admin.register')
-            ->with('message','new admin account created successfully');
+                ->with('message', 'new admin account created successfully');
         }
 
         abort('404');

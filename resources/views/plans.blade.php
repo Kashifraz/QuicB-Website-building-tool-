@@ -15,25 +15,25 @@
         <p class="alert alert-danger">you are already subscribed</p>
     @endif
     
-    <div class="container">
+    <div class="container" style="margin-top: 120px">
         <div class="row justify-content-center">
           @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
             </div>
           @endif
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Select Plane:</div>
+            <div class="col-md-10">
+                <div class="card border-3">
+                    <div class="card-header">Select Plan:</div>
      
                     <div class="card-body">
      
                         <div class="row">
                             @foreach($plans as $plan)
-                                <div class="col-md-6">
-                                    <div class="card mb-3">
-                                      <div class="card-header"> 
-                                            ${{ $plan->price }}/Mo
+                                <div class="col-md-6 mt-0 ">
+                                    <div class="card mb-3 border-bottom-0 border-top-0 border-right-0">
+                                      <div class="card-header fs-4"> 
+                                            ${{ $plan->price }}
                                       </div>
                                       <div class="card-body">
                                         <h5 class="card-title">{{ $plan->name }}</h5>

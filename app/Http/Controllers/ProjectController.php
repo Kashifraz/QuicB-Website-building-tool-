@@ -142,7 +142,7 @@ class ProjectController extends Controller
 
 
     public function GenerateCSS(Project $project){
-        $CSS = null;
+        $CSS = "*{margin:0; padding:0;}";
         // $elements = Element::where('component_id', '=', 7)->get();
         foreach ($project->projectcomponents as $component) {
             foreach ($component->projectelementgroups as $elementgroups) {

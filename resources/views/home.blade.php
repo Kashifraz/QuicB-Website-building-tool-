@@ -42,7 +42,9 @@
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top ">
     <div class="container d-flex align-items-center">
-    <h1 class="logo me-auto"><a href="index.html">QUIC-B</a></h1>
+    <h1 class="logo me-auto"><a href="/">
+       QuicB
+    </a></h1>
     <nav id="navbar" class="navbar">
         <ul>
             <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
@@ -100,12 +102,10 @@
               <a href={{route('register')}} class="btn-learn-more mt-3">Start Designing</a>
           </div>
           </div>
-          
-
 
           <!-- row-2 -->
           <div class="row content">
-            <div class="col-lg-6" style="margin-top:8%;">
+            <div class="col-lg-6" style="margin-top:8%;" >
               <h3 class="font-weight-bold">Low Cost Subscription</h3>
               <h5 class="mt-3"><small>QuicB offers all its services at a low cost subscription which makes it the most affordable website designing tool on internet.</small></h5>
               <a href={{route('register')}} class="btn-learn-more mt-3">Start Designing</a>
@@ -173,7 +173,7 @@
 <!-- End Services Section -->
 
 <!-- Client Reviews -->
-<section class="testimonials-section" id="portfolio">
+{{-- <section class="testimonials-section" id="portfolio">
     <div class="container">
     <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 testimonials">
@@ -221,12 +221,8 @@
         </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- Client Reviews End -->
-
-
-
-
     <!-- ======= Pricing Section ======= -->
     <section id="pricing" class="pricing">
         <div class="container" data-aos="fade-up">
@@ -234,8 +230,8 @@
             <h2>Pricing</h2>
             <p>We offer 100% satisafaction and Money back Guarantee</p>
         </div>
-            <div class="row">
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="row justify-content-center">
+            {{-- <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="box">
                 <h3>Basic</h3>
                 <h4><sup>$</sup>0<span>per month</span></h4>
@@ -247,10 +243,10 @@
                 <a class="btn btn-success-gradiant btn-md text-white btn-block" href={{route('register')}}><span>Choose Plan</span></a>
                 <!-- <a href="#" class="buy-btn">Get Started</a> -->
             </div>
-            </div>
+            </div> --}}
             <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
                 <div class="box featured">
-                <h3>Intermediate</h3>
+                <h3>Premium Yearly</h3>
                 <h4><sup>$</sup>20<span>per year</span></h4>
                 <h6 class="text-success"><span>Saves <sup>$</sup>40 per month </span></h6>
                 <ul>
@@ -264,8 +260,8 @@
                 </div>
             </div>
             <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
-                <div class="box">
-                <h3>Developer Plan</h3>
+                <div class="box featured">
+                <h3>Basic Montly</h3>
                 <h4><sup>$</sup>4<span>per month</span></h4>
                 <h6 class="text-success"><span>Saves <sup>$</sup>1 per month </span></h6>
                 <ul>
@@ -288,26 +284,14 @@
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
-    <div class="footer-newsletter" id="contact">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <h4>Subscribe Now</h4>
-            <p>To get latest news about Templates and QuicB Subscribe</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    
     <div class="footer-top">
       <div class="container">
         <div class="row">
 
           <div class="col-lg-5 col-md-6 footer-contact">
-            <h3>QUICB</h3>
+            <a href="/">
+              <img class="img-fluid" width="150" src={{asset('assets/images/logo1.png')}} >
+          </a>
             <p>
               Riphah International University <br>
               I-14 Islamabad<br>

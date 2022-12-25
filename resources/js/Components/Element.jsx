@@ -47,10 +47,10 @@ export default function projectComponent(props) {
             {props.element.content != null &&
 
                 <div key={props.index} >
-                    <form className="flex items-center mb-5">
-                        <div className="relative w-1/2">
+                    <form className="flex items-center mb-5 mr-16 mt-2">
+                        <div className="relative w-full ">
 
-                            <input
+                            <textarea
                                 type="text"
                                 name="content"
                                 value={data.content}

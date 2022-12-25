@@ -3,6 +3,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/inertia-react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
+import Footer from "@/Components/Footer";
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -44,6 +45,8 @@ export default function Authenticated({ auth, header, children }) {
             </nav>
 
             <main>{children}</main>
+            <Footer /> 
         </div>
+           
     );
 }

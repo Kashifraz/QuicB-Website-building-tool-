@@ -27,10 +27,15 @@ export default function (props) {
         e.preventDefault();
         post(route("admin.addattribute"), {
             preserveScroll: true,
-            onSuccess: () => setShowModal(false),
+            onSuccess: () => {
+                setShowModal(false);
+                reset();
+            }
         });
     };
-
+    
+       
+        
     return (
         <>
             <button

@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Password;
 
 class ProfileController extends Controller
 {
@@ -45,20 +46,24 @@ class ProfileController extends Controller
         $user = Auth::user();
         $request->validate([
             'current_password' => 'required',
-            'password' => ['required'],
-            'password_confirmation' => ['required'],
+            'password' => ['required', 'min:8'],
+            'password_confirmation' => ['required', 'min:8'],
         ]);
 
         if (
             Hash::check($request->current_password, $user->password) &&
+            $request->current_password != $request->password &&
             $request->password == $request->password_confirmation
         ) {
-            User::where('id', $user->id)
-            ->update([
-                'password' => Hash::make($request->password),
-            ]);
 
-        return back()->with('message', 'Password Changed');
-        } 
+            User::where('id', $user->id)
+                ->update([
+                    'password' => Hash::make($request->password),
+                ]);
+
+            return redirect()->back()->with('message', 'Password Changed');
+        }
+
+        return redirect()->back()->with('message', 'invalid inputs in password fields');
     }
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\ProjectattributesController;
 use App\Http\Controllers\ProjectcomponentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectelementController;
+use App\Http\Controllers\ProjectelementgroupController;
 use App\Http\Controllers\ProjectpropertiesController;
 use App\Http\Controllers\PropertyController;
 use App\Models\Elementgroup;
@@ -113,7 +114,7 @@ Route::post('/updatepass', [ProfileController::class, 'ChangePassword'])
     ->middleware('auth')->name('profile.pass');
 
 //project Routes
-Route::middleware(['auth', 'notadmin'])->group(function () {
+Route::middleware(['auth', 'subscriber', 'notadmin'])->group(function () {
     Route::get('/showhtml', [ProjectController::class, "generateHtml"]);
     Route::get('/showcss/{project}', [ProjectController::class, "generateCSS"]);
     Route::post('/createproject',[ProjectController::class, "createProject"])->name('project.create');
@@ -127,6 +128,7 @@ Route::middleware(['auth', 'notadmin'])->group(function () {
     Route::get('/project/preview/{project}', [ProjectController::class, 'previewProject'])->name('project.preview');
     Route::get('/project/download/{project}', [ProjectController::class, 'downloadCode'])->name('project.download');
     Route::get('/project/save/{project}', [ProjectController::class, 'saveProject'])->name('project.save');
+    Route::get('/elementgroup/duplicate/{projectelementgroup}', [ProjectelementgroupController::class, 'duplicateElementgroup'])->name('elementgroup.duplicate');
 });
 
 Route::get('/project/share/{project}', [ProjectController::class, 'shareProject'])->name('project.share');

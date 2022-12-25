@@ -27,7 +27,10 @@ export default function (props) {
         e.preventDefault();
         post(route("admin.addproperty"), {
             preserveScroll: true,
-            onSuccess: () => setShowModal(false),
+            onSuccess: () => {
+                setShowModal(false);
+                reset();
+            }
         });
     };
 

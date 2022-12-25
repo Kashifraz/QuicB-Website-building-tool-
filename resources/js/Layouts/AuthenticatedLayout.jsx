@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
+import Footer from "@/Components/Footer";
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -24,7 +25,7 @@ export default function Authenticated({ auth, header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
-                                <NavLink href={route('plans')} active={route().current('plans')}>
+                                <NavLink className='mt-5' href={route('plans')} active={route().current('plans')}>
                                     Subscription
                                 </NavLink>
                             </div>
@@ -130,6 +131,7 @@ export default function Authenticated({ auth, header, children }) {
             )}
 
             <main>{children}</main>
+            <Footer />
         </div>
     );
 }

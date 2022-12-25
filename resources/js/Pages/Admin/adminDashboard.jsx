@@ -61,7 +61,7 @@ export default function Dashboard(props) {
                                     <div class="flex flex-wrap w-full mb-8">
                                         <div class="w-full mb-6 lg:mb-0">
                                             <h1 class="sm:text-3xl text-5xl font-medium title-font mb-2 text-gray-900"><FontAwesomeIcon icon={faUsers} /> User's Analytics</h1>
-                                            <div class="h-1 w-36 bg-indigo-500 rounded"></div>
+                                            <div class="h-1 w-64 bg-indigo-500 rounded"></div>
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-5 gap-2 flex space-x-28">
@@ -88,15 +88,15 @@ export default function Dashboard(props) {
                                 <div class="container bg-white rounded-lg shadow px-5 py-8 mx-auto">
                                     <div class="flex flex-wrap w-full mb-8">
                                         <div class="w-full mb-6 lg:mb-0">
-                                            <h1 class="sm:text-3xl text-5xl font-medium title-font mb-2 text-gray-900"><FontAwesomeIcon icon = {faSackDollar} /> Charts </h1>
-                                            <div class="h-1 w-36 bg-indigo-500 rounded"></div>    
+                                            <h1 class="sm:text-3xl text-5xl font-medium title-font mb-2 text-gray-900"><FontAwesomeIcon icon = {faSackDollar} /> Subscriber's Analytics </h1>
+                                            <div class="h-1 w-80 bg-indigo-500 rounded"></div>    
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-5 gap-2 flex space-x-28">
                                         <div className="col-span-5">
                                             <LineChart
-                                                month={props.BarChart.month}
-                                                user={props.BarChart.user}
+                                                month={props.LineChart.month}
+                                                revenueData={props.LineChart.revenueData}
                                             />
                                         </div>
 

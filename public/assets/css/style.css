@@ -50,8 +50,8 @@ body {
     border-bottom-color: #fff;
     width: 60px;
     height: 60px;
-    -webkit-animation: animate-preloader 1.5s linear infinite;
-    animation: animate-preloader 1.5s linear infinite;
+    -webkit-animation: animate-preloader 0.5s linear infinite;
+    animation: animate-preloader 0.5s linear infinite;
   }
   
   @-webkit-keyframes animate-preloader {
@@ -462,9 +462,9 @@ body {
     color: #47b2e4;
   }
   
-  #hero .animated {
+  /* #hero .animated {
     animation: up-down 2s ease-in-out infinite alternate-reverse both;
-  }
+  } */
   
   @media (max-width: 991px) {
     #hero {
@@ -472,10 +472,10 @@ body {
       text-align: center;
     }
   
-    #hero .animated {
+    /* #hero .animated {
       -webkit-animation: none;
       animation: none;
-    }
+    } */
   
     #hero .hero-img {
       text-align: center;
@@ -514,7 +514,7 @@ body {
     }
   }
   
-  @-webkit-keyframes up-down {
+  /* @-webkit-keyframes up-down {
     0% {
       transform: translateY(10px);
     }
@@ -532,7 +532,7 @@ body {
     100% {
       transform: translateY(-10px);
     }
-  }
+  } */
   iframe{
     border-radius: 5px;
   }

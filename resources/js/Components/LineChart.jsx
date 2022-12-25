@@ -2,7 +2,7 @@ import React from "react";
 import {Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 
-const LineChart = ({ month, user }) => {
+const LineChart = ({ month, revenueData }) => {
     return (
         <div>
             <Line
@@ -10,8 +10,8 @@ const LineChart = ({ month, user }) => {
                     labels: month,
                     datasets: [
                         {
-                            label: "No of new users per month",
-                            data: user,
+                            label: "Revenue generated per month",
+                            data: revenueData,
                             backgroundColor: [
                                 "rgba(255, 99, 132, 0.2)",
                                 "rgba(54, 162, 235, 0.2)",

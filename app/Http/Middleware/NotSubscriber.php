@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsSubscriber
+class NotSubscriber
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class IsSubscriber
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() &&  $request->user()->subscribed()) {
+        if ($request->user() &&  !$request->user()->subscribed()) {
             // This user is not a paying customer...
-            return redirect(route('dashboard'))->with('message','already subscribed');
+            return redirect(route('dashboard'))->with('message','You need subscription to access Canvas');
         }
      
         return $next($request);

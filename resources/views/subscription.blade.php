@@ -11,9 +11,10 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container mt-5" >
         <div class="row justify-content-center">
             <div class="col-md-8">
+               
                 <div class="card">
                     <div class="card-header">
                         You will be charged ${{ number_format($plan->price, 2) }} for {{ $plan->name }} Plan
@@ -57,7 +58,7 @@
       
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        const stripe = Stripe('{{ env('STRIPE_KEY') }}')
+        const stripe = Stripe("pk_test_51LoOKXLPp6wETtzzeGP1ASPfCnqQpW7fR00u48Uz7NvlFCsSVvhDap392KKRLE7OA9oGGEbRe5ueEQYcvRKFdmEP00b1RUh703")
       
         const elements = stripe.elements()
         const cardElement = elements.create('card')
