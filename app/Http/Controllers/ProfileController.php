@@ -27,7 +27,7 @@ class ProfileController extends Controller
     {
 
         $request->validate([
-            'name' => 'required|min:4|string|max:255',
+            'name' => 'required|regex:/^[a-zA-Z-  ]+$/u|min:3|max:40',
             'email' => 'required|email|string|max:255'
         ]);
         $user = Auth::user();

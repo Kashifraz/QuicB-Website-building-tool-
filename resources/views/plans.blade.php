@@ -16,6 +16,7 @@
     @endif
     
     <div class="container" style="margin-top: 120px">
+      <img src={{asset('assets/images/logo1.png')}} alt="">
         <div class="row justify-content-center">
           @if(session()->has('success'))
             <div class="alert alert-success">

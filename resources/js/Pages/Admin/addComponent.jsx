@@ -121,6 +121,9 @@ export default function expense(props) {
                                                                 <p class="text-lg text-gray-500  dark:text-gray-400">
                                                                     {component.description}
                                                                 </p>
+                                                                <p class="text-lg text-gray-500  dark:text-gray-400">
+                                                                    Component tag = {component.component_tag}
+                                                                </p>
                                                             </div>
                                                             <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                                                                 <div class="inline-flex " >

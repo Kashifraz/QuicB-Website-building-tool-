@@ -12,8 +12,8 @@ class ElementgroupController extends Controller
     public function store(Request $request){
         
         $request->validate([
-            'name' => ['required'],
-            'tag'  => ['required'],
+            'name' => ['required','regex:/^[a-zA-Z-]+$/u','min:3','max:40'],
+            'tag'  => ['required','regex:/^[a-zA-Z-]+$/u'],
         ]);
 
         Elementgroup::create($request->all());

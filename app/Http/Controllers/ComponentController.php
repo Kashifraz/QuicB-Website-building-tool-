@@ -25,9 +25,9 @@ class ComponentController extends Controller
     {
 
         $request->validate([
-            'name' => ['required'],
-            'component_tag' => ['required'],
-            'description' => ['required'],
+            'name' => ['required','regex:/^[a-zA-Z-]+$/u','min:3','max:40'],
+            'component_tag' => ['required','regex:/^[a-zA-Z-]+$/u'],
+            'description' => ['required','min:20', 'max:150'],
         ]);
 
         Component::create($request->all());

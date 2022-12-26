@@ -10,7 +10,7 @@ class PropertyController extends Controller
     public function store(Request $request){
     
         $request->validate([ 
-            'property'=>['required'],
+            'property'=>['required','regex:/^\S*$/u','min:3','max:40'],
             'value'=>['required'],
         ]);
 

@@ -20,8 +20,8 @@ export default function profile(props) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className=" overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 border-b border-gray-200 ">
+                    <div className=" overflow-hidden  sm:rounded-lg">
+                        <div className="p-6  ">
                         {flash.message && 
                             <Alertbox message = {flash.message}  />
                         }

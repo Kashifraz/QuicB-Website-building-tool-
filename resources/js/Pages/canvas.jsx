@@ -53,7 +53,7 @@ export default function Canvas(props) {
             <div className="py-3">
                 <div className="max-w-7xl sm:px-6 lg:px-8 ml-10">
                     <div className="overflow-hidden sm:rounded-lg">
-                        <div className="p-3 ml-28">
+                        <div className="p-3 w-full">
                             {flash.message &&
                                 <Alertbox message={flash.message} />
                             }

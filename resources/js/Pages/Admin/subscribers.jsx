@@ -26,10 +26,10 @@ export default function Dashboard(props) {
                     {flash.message && 
                             <Alertbox message = {flash.message}  />
                         }
-                        <div className="p-6 bg-white border-b border-gray-200">
+                        <div className="p-8 bg-white border-b border-gray-200">
                             <a
                                 href={route("report.pdf")}
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded"
+                                class=" bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded"
                             >
                                 Business Report
                             </a>

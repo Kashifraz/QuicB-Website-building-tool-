@@ -41,10 +41,10 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => ['required'],
+            'title' => ['required','regex:/^[a-zA-Z-  ]+$/u','min:3','max:40'],
             'expensetype' => ['required'],
-            'amount' => ['required', 'integer','min:0'],
-            'description' => ['required'],
+            'amount' => ['required', 'integer','min:1'],
+            'description' => ['required','min:20', 'max:150' ],
         ]);
 
         Expense::create($request->all());

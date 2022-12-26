@@ -136,9 +136,9 @@ class AdminController extends Controller
     public function RegisterNewAdmin(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|regex:/^[a-zA-Z-  ]+$/u|min:3|max:40',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'max:30','confirmed', Rules\Password::defaults()],
         ]);
 
         if ($request->is_admin) {

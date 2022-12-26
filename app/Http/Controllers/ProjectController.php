@@ -20,8 +20,8 @@ class ProjectController extends Controller
     {
 
         $request->validate([
-            'title' => ['required'],
-            'description' => ['required'],
+            'title' => ['required','regex:/^[a-zA-Z-  ]+$/u','min:3','max:40'],
+            'description' => ['required','min:20','max:150'],
         ]);
 
         $project = Project::create($request->all());
@@ -99,7 +99,7 @@ class ProjectController extends Controller
     
         foreach ($project->projectcomponents as $component) {
             //appending container to HTML file
-            $container = " <div " . "id= 'container_" . $component->name . "' >";
+            $container = " <div " . "class= 'container_" . $component->name . "' >";
             Storage::append($path, $container);
             //appending component tag
             $componentOpen = " <" . $component->component_tag . " class = '" . $component->name . "' >";

@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Head, Link } from "@inertiajs/inertia-react";
 import { usePage, useForm } from "@inertiajs/inertia-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faCopy, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Element from "@/Components/Element";
 
 export default function Elementgroup(props) {
@@ -23,7 +23,9 @@ export default function Elementgroup(props) {
                                         <div className="flex-1 min-w-0 ">
 
                                             <p className="text-lg font-bold text-gray-900 truncate dark:text-white">
-                                                {Elementgroup.name} <Link href={route("elementgroup.duplicate", Elementgroup)} className="text-2xl"> <FontAwesomeIcon icon={faCopy} /></Link>
+                                                {Elementgroup.name}
+                                                    <Link href={route("elementgroup.duplicate", Elementgroup)} className="ml-2 text-2xl text-gray"> <FontAwesomeIcon icon={faCopy} /></Link>
+                                                    <Link href={route("elementgroup.delete", Elementgroup)} className="text-2xl text-red-700"> <FontAwesomeIcon icon={faTrash} /></Link>
                                             </p>
                                             <p className="text-lg text-gray-500  dark:text-gray-400">
                                                 {Elementgroup.tag}

@@ -60,4 +60,22 @@ class ProjectelementgroupController extends Controller
         return redirect()->route("project.canvas",$projectcomponent->project)
         ->with("message","elementgroup duplicated successfully");
     }
+
+    public function deleteElementgroup(Projectelementgroup $projectelementgroup){
+      
+        foreach ($projectelementgroup->projectelements as $element) {
+            foreach ($element->projectattributes as $attribute) {
+                $attribute->delete();
+            } 
+            foreach ($element->projectproperties as $property) {
+                $property->delete();
+            } 
+            $element->delete();     
+        }
+        $projectelementgroup->delete();
+        $projectcomponent = $projectelementgroup->projectcomponent;
+
+        return redirect()->route("project.canvas",$projectcomponent->project)
+        ->with("message","elementgroup deleted successfully");
+    }
 }

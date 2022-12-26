@@ -12,7 +12,7 @@ class ElementController extends Controller
 {
     public function store(Request $request){
         $request->validate([ 
-            'tag'=>['required'],
+            'tag'=>['required','regex:/^[a-zA-Z-]+$/u'],
             'type' =>['required'],
         ]);
 

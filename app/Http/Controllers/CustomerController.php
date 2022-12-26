@@ -61,7 +61,7 @@ class CustomerController extends Controller
                 ->paginate(15);
         }
 
-        return Inertia::render('customer', [
+        return Inertia::render('Admin/customer', [
             'customers' => $customer,
             'search' => $search,
             'filter' => $filter,
@@ -117,7 +117,7 @@ class CustomerController extends Controller
             ->select('users.*', 'subscriptions.stripe_status', 'subscriptions.name as subscription_name')
             ->paginate(5);
         $totalRevenue = $this->CalculateRevenue();
-        return Inertia::render('subscribers', [
+        return Inertia::render('Admin/subscribers', [
             'customers' => $customer,
             'totalRevenue' => $totalRevenue,
         ]);

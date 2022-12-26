@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\ComponentController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\ProjectelementgroupController;
 use App\Http\Controllers\ProjectpropertiesController;
 use App\Http\Controllers\PropertyController;
 use App\Models\Elementgroup;
+use Illuminate\Support\Facades\Auth;
 
 // Route::get('/', function () {
 //     return Inertia::render('home', [
@@ -39,6 +39,7 @@ Route::get('/dashboard', function () {
         "projects" => $projects,
     ]);
 })->middleware(['auth', 'verified', 'notadmin'])->name('dashboard');
+
 
 //Plan and subscription routes
 Route::middleware(['auth', 'subscriber', 'notadmin'])->group(function () {
@@ -129,6 +130,8 @@ Route::middleware(['auth', 'subscriber', 'notadmin'])->group(function () {
     Route::get('/project/download/{project}', [ProjectController::class, 'downloadCode'])->name('project.download');
     Route::get('/project/save/{project}', [ProjectController::class, 'saveProject'])->name('project.save');
     Route::get('/elementgroup/duplicate/{projectelementgroup}', [ProjectelementgroupController::class, 'duplicateElementgroup'])->name('elementgroup.duplicate');
+    Route::get('/elementgroup/delete/{projectelementgroup}', [ProjectelementgroupController::class, 'deleteElementgroup'])->name('elementgroup.delete');
+
 });
 
 Route::get('/project/share/{project}', [ProjectController::class, 'shareProject'])->name('project.share');
