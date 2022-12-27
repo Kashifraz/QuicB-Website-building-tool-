@@ -16,7 +16,7 @@ class NotSubscriber
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() &&  !$request->user()->subscribed()) {
+        if ($request->user() &&  $request->user()->stripe_id==null) {
             // This user is not a paying customer...
             return redirect(route('dashboard'))->with('message','You need subscription to access Canvas');
         }
@@ -24,4 +24,4 @@ class NotSubscriber
         return $next($request);
     
     }
-}
+}  

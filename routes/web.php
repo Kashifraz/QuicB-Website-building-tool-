@@ -115,7 +115,7 @@ Route::post('/updatepass', [ProfileController::class, 'ChangePassword'])
     ->middleware('auth')->name('profile.pass');
 
 //project Routes
-Route::middleware(['auth', 'subscriber', 'notadmin'])->group(function () {
+Route::middleware(['auth', 'notsubscriber', 'notadmin'])->group(function () {
     Route::get('/showhtml', [ProjectController::class, "generateHtml"]);
     Route::get('/showcss/{project}', [ProjectController::class, "generateCSS"]);
     Route::post('/createproject',[ProjectController::class, "createProject"])->name('project.create');

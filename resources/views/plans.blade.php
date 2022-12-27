@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Plans</title>
   </head>
   <body>
     @if (Auth::user()->subscribed())
@@ -16,7 +16,7 @@
     @endif
     
     <div class="container" style="margin-top: 120px">
-      <img src={{asset('assets/images/logo1.png')}} alt="">
+      
         <div class="row justify-content-center">
           @if(session()->has('success'))
             <div class="alert alert-success">

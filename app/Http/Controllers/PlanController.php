@@ -39,6 +39,7 @@ class PlanController extends Controller
 
         $request->user()->newSubscription($plan->name, $plan->stripe_plan)
             ->create($request->token);
-        return redirect()->route('dashboard')->with('success', 'you are successfully subscribed');
+
+        return redirect()->route('dashboard')->with('message', 'you are successfully subscribed');
     }
 }
