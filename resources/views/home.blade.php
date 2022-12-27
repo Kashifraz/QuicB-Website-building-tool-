@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="assets/images/favicons.png" rel="icon">
+    
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -75,8 +75,8 @@
             </div>
             </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img rounded" data-aos="zoom-in" data-aos-delay="200">
-          <iframe width="550" height="350"
-          src="https://www.youtube.com/embed/tgbNymZ7vqY">
+          <img width="550" height="350"
+          src={{asset('assets/images/herosection.png')}}>
           </iframe>
         </div>
         </div>
